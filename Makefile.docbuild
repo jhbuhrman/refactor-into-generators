@@ -1,0 +1,24 @@
+
+ASCIIDOC = asciidoc
+ASCIIDOC_SLIDY_FLAGS = --backend slidy
+
+MV = mv
+CAT = cat
+
+VPATH = ..:../example
+
+.PHONY: all
+
+.SUFFIXES: .slidytxt .html
+
+all: tbd-dd.html
+
+.slidytxt.html:
+	asciidoc_err="${TMPDIR}/asciidoc.$$$$.stderr"; \
+	exitcode=0; \
+	$(ASCIIDOC) $(ASCIIDOC_SLIDY_FLAGS) -o $@.tmp $< 2>"$${asciidoc_err}" || exitcode=$$?; \
+	$(CAT) "$${asciidoc_err}" >&2; \
+	[ -s "$${asciidoc_err}" -a $$exitcode -eq 0 ] && exitcode=2; \
+	$(RM) "$${asciidoc_err}"; \
+	[ $$exitcode -eq 0 ] && $(MV) $@.tmp $@ || $(RM) $@.tmp; \
+	(exit $$exitcode)
