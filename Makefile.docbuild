@@ -11,7 +11,7 @@ VPATH = ..:../example
 
 .SUFFIXES: .slidytxt .html
 
-all: tbd-dd.html
+all: refactor-into-generators.html
 
 .slidytxt.html:
 	asciidoc_err="${TMPDIR}/asciidoc.$$$$.stderr"; \
