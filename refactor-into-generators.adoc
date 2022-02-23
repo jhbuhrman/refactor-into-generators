@@ -1,0 +1,645 @@
+= When To Refactor Your Code Into Generators And How
+:author:    Jan-Hein Bührman
+:email:     {lt}jan-hein.buhrman@ordina.nl{gt}
+//:backend:   slidy
+//:backend: revealjs
+//:stem:
+:max-width: 80em
+:twitter-tag: @jbuhrman
+:conference-tag: @FIXME
+:data-uri:
+:icons: font
+:sourcedir: .
+// beige, black, league, night, serif, simple, sky, solarized, white
+:revealjs_theme: beige
+// "moon" is an alternative if you don't get the syntax highlighting
+// in a light theme
+// 25 mins
+:revealjs_totalTime: 1500
+:revealjs_controlsTutorial: false
+:revealjs_slideNumber: true
+:revealjs_hash: true
+:source-highlighter: highlightjs
+:highlightjs-languages: gherkin,pycon
+:hide-uri-scheme:
+//:source-highlighter: pygments
+//:highlightjs-theme: a11y-light
+//:pygments-linenums-mode: inline
+
+include::revealjs_settings.adoc[]
+{nbsp} +
+{nbsp} +
+
+`https://github.com/jhbuhrman/refactor-into-generators`
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+
+== Goals
+
+After this presentation, you will ...
+
+* be able to _recognize_ certain loop constructs as candidate for
+  refactoring,
+* know _how_ to convert these constructs into more maintainable
+  _Pythonic_ code,
++
+by refactoring them into elegant pipelines of generators.
+* be more acquainted with the standard library `itertools` module and
+  the `more-itertools` package
+
+
+== Hello! 🙂
+
+Jan-Hein Bührman `{lt}jan-hein.buhrman@ordina.nl{gt}`
+
+https://twitter.com/janheinb[`@janheinb`]
+{empty} +
+{empty} +
+
+* Witnessed Python's first baby steps
+* Various management and developer roles
+* (Co-)Founder of _Ordina Pythoneers_,
+** https://www.ordina.nl[`ordina.nl`]'s
+  practice dedicated to Python
+** Participating Sponsor of the PSF
+* Nowadays a happy Python developer™️
+
+[.notes]
+--
+* But first, let me introduce myself: My name is Jan-Hein Bührman; you see my work email address and my twitter handle on the slide
+* I am working for Ordina, a BeNeLux based IT service provider for more than 10 years already; time flies when you're having fun
+* I witnessed the first baby steps of Python more than 30 years ago, when I was
+  working as a programmer for the Dutch national research institute for mathematics and computer science
+* While working mainly as a C/C++ developer, I always kept an eye on Python's developments
+* While being a Java unit manager, I sparked the idea for starting up a dedicated Python Practice; it is quite special for a "broad-spectrum" IT service provider company to have a Practice like ours
+* And the Ordina Pythoneers are Participating Sponsor of the PSF
+* The last four years I am a happy Python coder
+--
+
+== Topics
+
+// [role="incremental"]
+
+* Loops ...
+** similar code
+** varying start/stop/selection criteria
+* Refactoring
+* Patterns of loop constructs &larr; refactoring
+  candidates
+* Generators
+* `itertools` and `more_itertools`
+
+
+[.notes]
+--
+* Loops with similar code but with varying start/stop/selection
+  criteria
+* Touch upon the topic of "Refactoring"
+* How to recognize some "patterns" of loop constructs as refactoring
+  candidates
+* Touch upon "Generators" and what they can bring us
+* And an introduction to the utility generators and functions from the `itertools` module
+  and the `more_itertools` package
+--
+
+
+== Variations on Fibonacci Number Selections
+
+.**(a fictional story)**
+
+* Suppose your Product Owner requires a function that returns a list of
+  all Fibonacci number less than _n_
+* Who knows what a Fibonacci number is? ✋
+
+[.notes]
+--
+* (This is a fictional story)
+* The Product Owner, representing the _Fibonacci Sequence Fan Club_,
+  would like you to make a function returning a list of all Fibonacci
+  Numbers less than a certain value
+* ✋ So who knows what a Fibonacci number is?
+--
+
+== Fibonacci Number (definition)
+
+[.text-right]
+[quote, Wikipedia, "Fibonacci number"]
+--
+[.text-left]
+In mathematics, the **Fibonacci numbers** [...] form a sequence, the
+**Fibonacci sequence**, in which each number is the sum of the two
+preceding ones. The sequence commonly starts from 0 and 1, [...]
+
+[.text-left]
+Starting from 0 and 1, the next few values in the sequence are:
+
+[.text-left]
+{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+--
+
+== Fibs Less Than N (Python)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
+--
+* Source: `https://docs.python.org/3/tutorial/modules.html`
+
+[.notes]
+--
+* [Explain the function]
+* Variable `a` holds the "current" Fibonacci number
+* Variable `b` holds the "next" Fibonacci number
+--
+
+== Product Owner is happy and wants more
+
+* Happy with the delivered result, the Product Owner asks for more
+  functionality:
+
+--
+[quote, Happy Product Owner, More Features]
+____________________________________________________________________
+Can you also make a function that returns the _n_'th Fibonacci number
+(counting from zero)?
+____________________________________________________________________
+--
+
+
+== The N'th Fibonacci number (Python)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/before.py[lines="11..16"]
+--
+
+
+== Now the Product Owner really gets enthusiastic!
+
+[quote, Very Enthusiastic Product Owner, Even More features]
+--
+Now that we've got functions for ...
+
+* Fibonacci numbers up to N,
+* the N'th Fibonacci number,
++
+..., can you also make functions that return ...
++
+* the first N Fibonacci numbers, and
+* the smallest Fibonacci number greater than or equal to N?
+--
+
+
+== The First N Fibs (Python)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/before.py[lines="19..26"]
+--
+
+
+== Smallest Fib Greater/Equal N (Python)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/before.py[lines="37..42"]
+--
+
+
+== All (shortened) functions next to each other
+
+[cols=2*]
+|===
+a|[source,python]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="24..30"]
+a|[source,python]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="42..48"]
+
+a|[source,python]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="34..38"]
+a|[source,python]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="59..63"]
+|===
+
+{nbsp} +
+Do you see a pattern? ✋
+
+[.notes]
+--
+[cols=2*]
+|===
+|fib_list_to
+|first_n_fibs
+
+|fib_ordinal
+|smallest_fib_greater_equal
+
+|===
+
+* ✋ We're seeing a pattern here, don't we?
+* [next slide]
+--
+
+
+== The pattern
+
+[source,python]
+--
+def some_fib_related_func(some_parameter):
+    # (SOMETIMES: INITIALIZE THE LIST)
+    a, b = 0, 1  # <1>
+    while "some condition or otherwise a for-loop":  # <2>
+        # (SOMETIMES: APPEND SOMETHING TO THE LIST)
+        a, b = b, a + b  # <3>
+    return a  # (OR SOMETIMES: RETURN THE LIST) <4>
+--
+<1> The variables `a` and `b` are initialized to their initial values
+<2> Some `while` loop or `for` loop is set up
+<3> The variables `a` and `b` are assigned their new respective values
+<4> The desired calculated value, or a list of these values, is returned
+
+[.notes]
+--
+* [see slide]
+* Now that you see that the same code appears in different functions,
+  you start looking for ways to get rid of the apparent _redundancy_ of
+  code.
+--
+
+
+== Time to Start Refactoring Your Code
+
+**(because you don't like redundant code)**
+{nbsp} +
+{nbsp} +
+
+❓ Refactoring ✋
+
+[.notes]
+--
+* I don't know how you experience it, but I always get this itchy
+  feeling if I see repetitions of code, (keeping the code _DRY_)
+* so you start looking for ways how to refactor the code, extracting the common part into a function or method +
+  {nbsp}
+* ✋ So who knows what refactoring is?
+--
+
+== Code Refactoring
+
+* Restructuring existing computer code
+* Keeping external behaviour the same
+* Less complexity
+* Improves
+** design and structure
+** code readability
+** maintainability
+
+[.text-right]
+{blank} +
+Code Refactoring +
+{zwsp} -- Wikipedia
+
+[.notes]
+--
+* So what's _code refactoring_ about?
+* You restructure your code *without* changing its external behavior
+* You usually do this to improve the design, structure, and implementation +
+  (but you make sure that the original functionality of the code remains
+  the same).
+* Your code becomes *more readable*, *less complex*, *better
+  maintainable*
+--
+
+== Extracting Common Parts Not Doable?
+
+* It seems impossible to extract common parts of the code into functions
+* It is mixed up with control flow constructs -- `while` loops or `for` loops
+* Perhaps combine the requested functions ❓
+** (by using a "mode" flag or an `enum` designating the mode)
+
+
+== Experiment: Combine The First Two Functions
+
+WARNING: Put on your Peril-Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="6..19"]
+--
+
+[.notes]
+--
+* Warning: what you see here, really hurts the eye;
+* (It starts already with the ugly type annotation, and as the author of `Black`, Łukasz Langa, recently told us in a talk: "__ugly type annotations are an indication of ugly code__")
+* So don't take this contrived example too seriously; it merely demonstrates that the resulting code is _not_ quite _maintainable_ and this isn't the way to go...
+--
+
+
+== Refactoring The Right Way: Single Responsibility
+
+* The _common_ part between all functions:
+** producing Fibonacci numbers
+* The _mutually differing_ parts between all functions:
+** loop construct:
+*** either a `for` loop (counting), or
+*** a `while` loop (varying end-conditions)
+** how to further process the generated Fibonacci numbers:
+*** collected in a list, or
+*** just the last calculated "current" Fibonacci number
+
+**how to separate the _common_ part from the _mutually differing_ parts?**
+
+[.notes]
+--
+* The first step is to look at your code in a more _conceptual_ way..., from a larger distance (larger flying altitude)
+* And then you realize that there is a _data producing_ part in your code, ...
+* And _that's_ the part that you can isolate.
+--
+
+
+== Context Switch: Generator Functions
+
+[role="incremental"]
+* A _generator function_, when called, returns a _generator iterator_.
+* It looks like a normal function, but it contains `yield` expressions.
+* Each `yield` produces one item.
+* The _iterator_ can subsequently be used in a `for` loop, for example.
+* Each time you requests an item from it, the generator
+[role="incremental"]
+** gives back an item through the `yield` expression,
+** saves it state, and
+** passes control back to the calling code.
+
+
+[.notes]
+--
+* Enter *Generator Functions*
+* You just make a function, however it contains a `yield` expression for
+  each value that you would like to give back to the "caller" (the
+  "consuming" party) +
+{nbsp}
+* So _how_ can you code a _generator_ function producing these Fibonacci
+  numbers?
+--
+
+
+== The Fibonacci Number Generator
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="7..12"]
+--
+
+
+[.notes]
+--
+* So this is how the Fibonacci Number Generator looks like
+* [shortly explain the code of `fib_gen()`]
+* What you see here, is in essence the "canonical" code representation
+  of the Fibonacci sequence (when coded in an _imperative_ programming
+  style).
+* So how would you use this generator?
+* [next slide]
+--
+
+== Example usage of the Fibonacci generator
+
+Print the first 8 Fibonacci numbers using `fib_gen()`:
+
+[source,pycon]
+--
+>>> for _, fib in zip(range(10), fib_gen()):
+...     print(f"{fib:2d}")
+...
+ 0
+ 1
+ 1
+ 2
+ 3
+ 5
+ 8
+13
+--
+{nbsp} +
+
+So now you can refactor the requested Fibonacci functions, making use of
+this Fibonacci number generator.
+
+[.notes]
+--
+* [Explain that `zip()` stops as soon as one of the iterators is
+  exhausted.]
+* Making the (by the Product Owner requested) 4 Fibonacci functions,
+  has now become relatively easy.
+* But we can go even one step further ...
+* [next slide]
+--
+
+
+//== Nice Dependency Relation Between End User Functionality And Fibonacci Generator
+//
+//* The End User Functionality
+
+
+== Are We Set? Problem Solved?
+
+The next step: make use of the building blocks provided by:
+
+* `itertools`{empty}footnote:[`https://docs.python.org/3/library/itertools.html`] from the standard library, and
+* the `more-itertools`{empty}footnote:[`https://more-itertools.readthedocs.io`/] external package.
+
+[quote,"Python documentation, library","itertools"]
+The [`itertools`] module standardizes a core set of fast, memory efficient tools that are useful by themselves or in combination. Together, they form an "iterator algebra" making it possible to construct specialized tools succinctly and efficiently in pure Python.
+
+[.notes]
+--
+* ... because Python's standard library provides a wonderful module,
+  delivering this functionality without needing to code any loop
+  constructs yourself, the `itertools` module [read out the quote]
+* what is called the "iterator algebra", is what I would call "a pipeline of iterators"
+* *`more-itertools` implements the recipes listed in the `itertools` documentation and provides additional building blocks*.
+--
+
+
+== Fibs Less Than N (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
+--
+{nbsp} +
+[.text-left]
+--
+``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+
+{empty}:: Make an iterator that returns elements from the iterable as long as the predicate is true.
+--
+
+[.notes]
+--
+// FIXME TODO: perhaps let the explanation appear first, followed by the actual code?
+* [First explain `takewhile`]: The `takewhile` "filter" fetches the elements one by one, calls the
+  predicate function with fetched element as the single parameter, and
+  passes through each element as long as the predicate returns a truthy
+  value, and stops otherwise.
+* [explain how the function uses these building blocks]
+* Subsequently, you collect the resulting truncated Fibonacci sequence in a list.
+--
+
+
+== The N'th Fibonacci number (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="20..22"]
+--
+[.text-left]
+--
+``itertools.``**`islice`**``(``__``iterable``__``, ``__``stop``__``)``: +
+``itertools.``**`islice`**``(``__``iterable``__``, ``__``start``__``, ``__``stop``__{startsb}``, ``__``step``__{endsb}``)``:
+
+{empty}:: Make an iterator that returns selected elements from the
+iterable, just like regular slicing,
+but _without_ support for negative values for start, stop, or step.
+
+``more_itertools.``**`one`**``( +
+{nbsp}{nbsp}{nbsp}{nbsp}``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError`` +
+``)``:
+
+{empty}:: Return the first item from iterable, which is expected to contain only that item. Raise an exception if iterable is empty or has more than one item.
+--
+
+[.notes]
+--
+* [First explain `islice` and `one`]: The ``itertools``' **`islice`** generator selects elements from the iterable, like
+  slicing would do from a sequence. Either you specify only the _stop_
+  value, or you can specify _start_, _stop_, and optionally the _step_ value
+* And the ``more_itertools``' **`one`** function ensures that there is
+  exactly one element in the iterable, and returns that element. You can
+  specify additional keyword arguments to specify your own exceptions,
+  other than the default `ValueError`
+* [explain how the function uses these building blocks]
+--
+
+
+== The First N Fibs (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="25..27"]
+--
+{empty} +
+[.text-left]
+Now making use of the ``itertools.``**`islice`**``(``__``iterable``__``, ``__``stop``__``)`` variant, +
+only providing the __``stop``__ argument
+
+[.notes]
+--
+* In this case, you use the ``itertools``' **`islice`** "selection
+  generator" with only the __`stop`__ argument.
+* And you use the `list` constructor again to collect the elements in a
+  list.
+* [explain how the function uses these building blocks]
+--
+
+
+== The Smallest Fib Greater/Equal N (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="37..41"]
+--
+// {nbsp} +
+[.text-left]
+--
+``itertools.``**`dropwhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+
+{empty}:: Make an iterator that drops elements from the iterable as long as the predicate is true; afterwards, returns every element.
+
+``more_itertools.``**`first`**``(``__``iterable``__{startsb}``, ``__``default``__{endsb}``)``:
+
+{empty}:: Return the first item of iterable, or a default if iterable is empty.
+
+--
+
+[.notes]
+--
+* [First explain `dropwhile` and `first`] The ``itertools``' **``dropwhile``**
+  generator filters away items from the passed __``iterable``__. For each item from
+  the _iterable_, it calls the provided _predicate function_ with the item as its single argument, and as long
+  as this function provides a "truthy" value, the element is discarded. Once the _predicate function_ returns a "falsy" value, it starts passing through
+  the remaining items.
+* The ``more_itertools``' **`first`** function just returns the first value
+  of the passed __``iterable``__.
+* [explain how the function uses these building blocks]
+--
+
+
+== A Lot of Useful Itertools
+
+[.text-left]
+* Check out the documentation of `itertools` and `more_itertools`
+* A valuable collection of utilities to have in your toolbox
+
+[.text-left]
+_Just an Example:_
+
+[.text-left]
+* Using ``more_itertools.``**`chunked()`** (or **`ichunked()`**) to
+  break an iterable into smaller parts.
+* For bulk data - can be used to insert manageable sized "batches" of values
+  into a database, for example.
+
+
+[.notes]
+--
+* I encourage you to read through the documentation of the `itertools`
+  module and the `more_itertools` package. It might probably save you
+  some work if you have a good idea about the functionality it offers.
+* It often makes your code more _expressive_ as well
+--
+
+
+== Recap
+
+* Recognize the "pattern" of certain loop constructs as candidate for
+  refactoring,
+* Introduce _generator functions_ to _extract_ the "data-producing" part
+* `itertools` and `more_itertools` might save a lot of coding
+
+
+[.notes]
+--
+* You've heard about the following:...
+* [see slides]
+--
+
+
+== Resources and Links
+
+Fibonacci number::
+    `https://en.wikipedia.org/wiki/Fibonacci_number`
+Code refactoring::
+    `https://en.wikipedia.org/wiki/Code_refactoring`
+Generator Function::
+    `https://docs.python.org/3/glossary.html#term-generator`
+``itertools``::
+    `https://docs.python.org/3/library/itertools.html`
+``more_itertools``::
+    `https://more-itertools.readthedocs.io/`
+
+
+== Thank You
+All the presented code has been verified using `pytest-bdd`, see
+`https://github.com/jhbuhrman/refactor-into-generators`
+{blank} +
+{blank} +
+{blank} +
+
+.Questions
+****
+❓
+****

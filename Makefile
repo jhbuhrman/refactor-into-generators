@@ -1,3 +1,5 @@
+PY_SOURCE_ROOT_DIRS = src tests
+
 install-pip:
 	python -m pip install --upgrade pip-tools pip setuptools
 
@@ -10,40 +12,37 @@ upgrade-deps: install-pip
 	pip-compile --upgrade --build-isolation --generate-hashes --output-file requirements.txt requirements.in
 
 init: requirements.txt
-	pip install --editable src
+	pip install --editable .
 	pip install -r requirements.txt
 
 sync: requirements.txt
 	pip-sync requirements.txt
-	pip install --editable src
+	pip install --editable .
 
 isort:
-	isort src tests features
+	isort $(PY_SOURCE_ROOT_DIRS)
 
 black:
-	black src tests features
+	black $(PY_SOURCE_ROOT_DIRS)
 
 isort-check:
-	isort --check-only src tests features
+	isort --check-only $(PY_SOURCE_ROOT_DIRS)
 
 black-check:
-	black --check src tests features
+	black --check $(PY_SOURCE_ROOT_DIRS)
 
 flake8:
-	flake8 src tests
+	flake8 $(PY_SOURCE_ROOT_DIRS)
 
-check: isort-check black-check flake8
+check: isort-check black-check flake8 test-all
+
+FIB_MODULES = before before_compressed first_two_combined refactored
+
+test-all: $(FIB_MODULES)
+
+$(FIB_MODULES):
+	pytest --fib-module=$@
 
 fixfmt: isort black
 
-# For building the slides
-
-SUBDIRS = docbuild
-
-.PHONY: all subdirs $(SUBDIRS)
-
-subdirs: $(SUBDIRS)
-
-$(SUBDIRS):
-	[ -d $@ ] || mkdir -p $@
-	$(MAKE) -C $@ -f ../Makefile.$@
+.PHONY: all test-all $(FIB_MODULES)
