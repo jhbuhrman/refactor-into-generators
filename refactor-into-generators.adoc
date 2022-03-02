@@ -21,17 +21,26 @@ When To Refactor Into Generators And How
 // * Recap
 
 
-Topics / Main take-aways
-------------------------
+Goals
+-----
 [role="incremental"]
-* What is Behavior Driven Development
-* How does the Gherkin language looks like
-* How to use `behave` as BDD tool for Python
-* How to test different interfaces of your system with the same tests (slow vs fast)
-* Additional packages to make validating easier
-* Some pieces of advice when specifying Gherkin
-* Alternative(s) for `behave`
-* Additional resources
+After this presentation, you will be: ...
+
+[role="incremental"]
+* able to _recognize_ certain loop constructs as candidate for refactoring,
+
+* know _how_ to convert these constructs into more maintainable _Pythonic_ code, +
+by refactoring them into an elegant pipeline of
+ generators.
+
+
+Topics
+------
+[role="incremental"]
+* What is refactoring
+* A first example: loops with similar code but with different start/stop/selection criteria
+* Short intro on a Generator function
+* How to recognize some "patterns" of loop constructs as refactoring candidates
 
 
 What Is Behavior Driven Development
