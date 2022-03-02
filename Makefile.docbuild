@@ -9,11 +9,11 @@ VPATH = ..:../example
 
 .PHONY: all
 
-.SUFFIXES: .slidytxt .html
+.SUFFIXES: .adoc .html
 
 all: refactor-into-generators.html
 
-.slidytxt.html:
+.adoc.html:
 	asciidoc_err="${TMPDIR}/asciidoc.$$$$.stderr"; \
 	exitcode=0; \
 	$(ASCIIDOC) $(ASCIIDOC_SLIDY_FLAGS) -o $@.tmp $< 2>"$${asciidoc_err}" || exitcode=$$?; \
