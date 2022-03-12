@@ -10,12 +10,12 @@ upgrade-deps: install-pip
 	pip-compile --upgrade --build-isolation --generate-hashes --output-file requirements.txt requirements.in
 
 init: requirements.txt
-	pip install --editable src
+	pip install --editable .
 	pip install -r requirements.txt
 
 sync: requirements.txt
 	pip-sync requirements.txt
-	pip install --editable src
+	pip install --editable .
 
 isort:
 	isort src tests features
@@ -37,7 +37,6 @@ check: isort-check black-check flake8
 fixfmt: isort black
 
 # For building the slides
-
 SUBDIRS = docbuild
 
 .PHONY: all subdirs $(SUBDIRS)
