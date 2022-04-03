@@ -2,6 +2,7 @@
 :author:    Jan-Hein Bührman
 :email:     jan-hein.buhrman@ordina.nl
 :backend:   slidy
+:stem:
 :max-width: 47em
 :data-uri:
 :icons:
@@ -27,7 +28,8 @@ After this presentation, you will: ...
 [role="incremental"]
 * be able to _recognize_ certain loop constructs as candidate for refactoring,
 
-* know _how_ to convert these constructs into more maintainable _Pythonic_ code, +
+* know _how_ to convert these constructs into more maintainable _Pythonic_ code,
++
 by refactoring them into an elegant pipeline of
  generators.
 
@@ -36,11 +38,61 @@ by refactoring them into an elegant pipeline of
 
 == Topics
 [role="incremental"]
-* What is refactoring
 * A first example: loops with similar code but with different start/stop/selection criteria
+* What is refactoring
 * Short intro on a Generator function
 * How to recognize some "patterns" of loop constructs as refactoring candidates
 * FIXME: what else?
+
+
+== A first example -- loops with similar code
+[role="incremental"]
+* Suppose your Product Owner requires a function that returns a list of first N Fibonacci numbers
+* Who knows what a Fibonacci number is? ✋
+* {empty}
++
+--
+[quote, Wikipedia, Fibonacci Number]
+____________________________________________________________________
+In mathematics, the **Fibonacci numbers** [...] form a sequence, the **Fibonacci sequence**, in which each number is the sum of the two preceding ones. The sequence commonly starts from 0 and 1, [...]
+
+Starting from 0 and 1, the next few values in the sequence are:
+
+{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+____________________________________________________________________
+--
+
+== Specify the test first (Test-Driven Development with Gherkin)
+[role="incremental"]
+* Let's specify the test first so that we exactly know what we need to develop
+* And let's use the _Gherkin Language_ to specify this:
+
+[role="incremental"]
+[source,feature]
+----
+Feature: Fibonacci functionality
+  As a curious person,
+  I want to see the a list of the first N Fibonacci numbers,
+  so that I can learn how they look like.
+
+  Scenario: List of first N Fibonacci numbers
+    Given a class providing Fibonacci related funcionality
+    When I call the "fib_list_to_n" method with parameter "10"
+    Then the method returns a list of "0, 1, 1, 2, 3, 5, 8, 13, 21, 34"
+----
+
+[role="incremental"]
+* It is a convention to put in-line parameters (like `"10"`) between double quotes
+
+[role="incremental"]
+[horizontal]
+**Given**:: Describes a stable, intial state of the system _before_ the relevant action is taken
+**When**:: Describes the _action_ that is relevant for this specific scenario
+**Then**:: Describes the _outcome_ of the action
+
+[role="incremental"]
+(credits & more info: https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language/[Automation Panda])
+
 
 //== Test
 //[role="incremental"]
