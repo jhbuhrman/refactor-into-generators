@@ -1,3 +1,5 @@
+PY_SOURCE_ROOT_DIRS = src tests
+
 install-pip:
 	python -m pip install --upgrade pip-tools pip setuptools
 
@@ -18,19 +20,19 @@ sync: requirements.txt
 	pip install --editable .
 
 isort:
-	isort src tests features
+	isort $(PY_SOURCE_ROOT_DIRS)
 
 black:
-	black src tests features
+	black $(PY_SOURCE_ROOT_DIRS)
 
 isort-check:
-	isort --check-only src tests features
+	isort --check-only $(PY_SOURCE_ROOT_DIRS)
 
 black-check:
-	black --check src tests features
+	black --check $(PY_SOURCE_ROOT_DIRS)
 
 flake8:
-	flake8 src tests
+	flake8 $(PY_SOURCE_ROOT_DIRS)
 
 check: isort-check black-check flake8
 

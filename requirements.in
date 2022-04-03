@@ -6,6 +6,7 @@ psycopg2-binary
 # tests
 pytest
 pytest-icdiff
+pytest-mock
 mypy
 requests
 behave

@@ -4,7 +4,10 @@ Here are some notes to self.
 
 ### Slide technologies:
 
-- [AsciiDoc with slidy backend](https://asciidoc-py.github.io/slidy.html)
+- [AsciiDoc with slidy backend](https://asciidoc-py.github.io/slidy.html), see also following additional resources:
+  - [AsciiDoc User Guide](https://asciidoc-py.github.io/userguide.html) 
+  - [AsciiDoc Language Documentation](https://docs.asciidoctor.org/asciidoc/latest/)
+  - [AsciiDoc Writer's Guide](https://asciidoctor.org/docs/asciidoc-writers-guide/)
 - [reStructuredText to reveal.js](https://github.com/LLNL/rst2slides) could be a great alternative!
     - See also [reveal.js](https://github.com/hakimel/reveal.js/)
     - But only **after** you're have finished your slides in AsciiDoc

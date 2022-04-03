@@ -399,8 +399,13 @@ pytest==7.0.1 \
     # via
     #   -r requirements.in
     #   pytest-icdiff
+    #   pytest-mock
 pytest-icdiff==0.5 \
     --hash=sha256:3a14097f4385665cb04330e6ae09a3dd430375f717e94482af6944470ad5f100
+    # via -r requirements.in
+pytest-mock==3.7.0 \
+    --hash=sha256:5112bd92cc9f186ee96e1a92efc84969ea494939c3aead39c50f421c4cc69534 \
+    --hash=sha256:6cff27cec936bf81dc5ee87f07132b807bcda51106b5ec4b90a04331cba76231
     # via -r requirements.in
 requests==2.27.1 \
     --hash=sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61 \
