@@ -9,6 +9,9 @@
     <orderEntry type="jdk" jdkName="Python 3.10 (refactor-into-generators)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyBDDFrameworkConfig">
+    <option name="preferedFrameworkName" value="pytest-bdd" />
+  </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="py.test" />
   </component>

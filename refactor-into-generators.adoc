@@ -47,10 +47,10 @@ by refactoring them into an elegant pipeline of
 
 == A first example -- loops with similar code
 [role="incremental"]
-* Suppose your Product Owner requires a function that returns a list of first N Fibonacci numbers
+* Suppose your Product Owner requires a function that returns a list of all Fibonacci number less than n
 * Who knows what a Fibonacci number is? ✋
-* {empty}
-+
+
+[role="incremental"]
 --
 [quote, Wikipedia, Fibonacci Number]
 ____________________________________________________________________
@@ -62,7 +62,7 @@ Starting from 0 and 1, the next few values in the sequence are:
 ____________________________________________________________________
 --
 
-== Specify the test first (Test-Driven Development with Gherkin)
+== Specify the test first (Test-Driven)
 [role="incremental"]
 * Let's specify the test first so that we exactly know what we need to develop
 * And let's use the _Gherkin Language_ to specify this:
@@ -70,15 +70,16 @@ ____________________________________________________________________
 [role="incremental"]
 [source,feature]
 ----
-Feature: Fibonacci functionality
+Feature: Fibonacci functionality FIXME will become Fibonacci all the way later on
   As a curious person,
-  I want to see the a list of the first N Fibonacci numbers,
-  so that I can learn how they look like.
+  I want to see the a list of the Fibonacci numbers less than a certain
+    value,
+  So that I can learn how they look like.
 
-  Scenario: List of first N Fibonacci numbers
-    Given a class providing Fibonacci related funcionality
-    When I call the "fib_list_to_n" method with parameter "10"
-    Then the method returns a list of "0, 1, 1, 2, 3, 5, 8, 13, 21, 34"
+  Scenario: List of Fibonacci numbers less than N
+    Given a module providing Fibonacci related functionality
+    When I call the "fib_list_to" function with parameter "10"
+    Then the function returns a list of "0, 1, 1, 2, 3, 5, 8"
 ----
 
 [role="incremental"]
@@ -93,6 +94,37 @@ Feature: Fibonacci functionality
 [role="incremental"]
 (credits & more info: https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language/[Automation Panda])
 
+
+== Implementation
+[role="incremental"]
+[source,python]
+----
+def fib_list_to(n):
+    """Return list of all Fibonacci numbers less than n."""
+    result = []
+    a, b = 0, 1
+    while a < n:
+        result.append(a)
+        a, b = b, a + b
+    return result
+----
+[role="incremental"]
+* Source: https://docs.python.org/3/tutorial/modules.html
+* ❓ Add type annotions ❓
+
+
+== Implementation (with type annotations)
+[source,python]
+----
+def fib_list_to(n: int) -> list[int]:
+    """Return list of all Fibonacci numbers less than n."""
+    result: list[int] = []
+    a, b = 0, 1
+    while a < n:
+        result.append(a)
+        a, b = b, a + b
+    return result
+----
 
 //== Test
 //[role="incremental"]

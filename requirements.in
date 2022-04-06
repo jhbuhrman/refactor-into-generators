@@ -1,18 +1,10 @@
-# app
-sqlalchemy
-flask
-psycopg2-binary
+# functionality
+more_itertools
 
 # tests
 pytest
-pytest-icdiff
-pytest-mock
+pytest-bdd
 mypy
-requests
-behave
-strenum
-pyhamcrest
-more_itertools
 
 # static-qa
 black
