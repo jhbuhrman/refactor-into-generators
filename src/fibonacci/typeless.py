@@ -1,4 +1,3 @@
-
 def fib_list_to(n):
     """Return list of all Fibonacci numbers less than n."""
     result = []

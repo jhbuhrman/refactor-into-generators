@@ -6,6 +6,7 @@
 :max-width: 47em
 :data-uri:
 :icons:
+:sourcedir: .
 
 // This is a comment
 
@@ -47,20 +48,21 @@ by refactoring them into an elegant pipeline of
 
 == A first example -- loops with similar code
 [role="incremental"]
-* Suppose your Product Owner requires a function that returns a list of all Fibonacci number less than n
+* Suppose your Product Owner requires a function that returns a list of all Fibonacci number less than _n_
 * Who knows what a Fibonacci number is? ✋
 
 [role="incremental"]
 --
 [quote, Wikipedia, Fibonacci Number]
 ____________________________________________________________________
-In mathematics, the **Fibonacci numbers** [...] form a sequence, the **Fibonacci sequence**, in which each number is the sum of the two preceding ones. The sequence commonly starts from 0 and 1, [...]
+In mathematics, the **Fibonacci numbers** {startsb}...{endsb} form a sequence, the **Fibonacci sequence**, in which each number is the sum of the two preceding ones. The sequence commonly starts from 0 and 1, {startsb}...{endsb}
 
 Starting from 0 and 1, the next few values in the sequence are:
 
 {empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
 ____________________________________________________________________
 --
+
 
 == Specify the test first (Test-Driven)
 [role="incremental"]
@@ -70,16 +72,7 @@ ____________________________________________________________________
 [role="incremental"]
 [source,feature]
 ----
-Feature: Fibonacci functionality FIXME will become Fibonacci all the way later on
-  As a curious person,
-  I want to see the a list of the Fibonacci numbers less than a certain
-    value,
-  So that I can learn how they look like.
-
-  Scenario: List of Fibonacci numbers less than N
-    Given a module providing Fibonacci related functionality
-    When I call the "fib_list_to" function with parameter "10"
-    Then the function returns a list of "0, 1, 1, 2, 3, 5, 8"
+include::{sourcedir}/tests/features/first_fibonacci.feature[]
 ----
 
 [role="incremental"]
@@ -99,14 +92,7 @@ Feature: Fibonacci functionality FIXME will become Fibonacci all the way later o
 [role="incremental"]
 [source,python]
 ----
-def fib_list_to(n):
-    """Return list of all Fibonacci numbers less than n."""
-    result = []
-    a, b = 0, 1
-    while a < n:
-        result.append(a)
-        a, b = b, a + b
-    return result
+include::{sourcedir}/src/fibonacci/typeless.py[]
 ----
 [role="incremental"]
 * Source: https://docs.python.org/3/tutorial/modules.html
@@ -116,15 +102,48 @@ def fib_list_to(n):
 == Implementation (with type annotations)
 [source,python]
 ----
-def fib_list_to(n: int) -> list[int]:
-    """Return list of all Fibonacci numbers less than n."""
-    result: list[int] = []
-    a, b = 0, 1
-    while a < n:
-        result.append(a)
-        a, b = b, a + b
-    return result
+include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
 ----
+* Source: https://docs.python.org/3/tutorial/modules.html
+
+[role="incremental"]
+* Now the Product Owner gets really excited and asks for more functionality:
+
+[role="incremental"]
+--
+[quote, Excited Product Owner, More Features]
+____________________________________________________________________
+Can you also make a function that returns the _n_'th Fibonacci number (counting from zero)?
+____________________________________________________________________
+--
+
+
+== Gherkin for the N'th Fibonacci number
+[source,feature]
+----
+include::{sourcedir}/tests/features/fibonaccis.feature[]
+----
+[role="incremental"]
+--
+[quote, Wikipedia, Fibonacci Number]
+____________________________________________________________________
+
+{startsb}...{endsb} the next few values in the sequence are:
+
+{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+// index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
+____________________________________________________________________
+--
+
+
+== Python source for the N'th Fibonacci number
+[source,python]
+----
+include::{sourcedir}/src/fibonacci/before.py[lines="11..20"]
+----
+
+
+// lines=5..10
 
 //== Test
 //[role="incremental"]
@@ -169,6 +188,7 @@ The Gherkin Language
 --------------------
 
 ✋ Who is familiar with Gherkin?
+
 
 
 Gherkin: Standard Example
