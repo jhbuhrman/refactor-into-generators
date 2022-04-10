@@ -6,5 +6,5 @@ Feature: Fibonacci functionality
 
   Scenario: List of Fibonacci numbers less than N
     Given a module providing Fibonacci related functionality
-    When I call the "fib_list_to" function with parameter "10"
+    When the developer calls the "fib_list_to" function with param "10"
     Then the function returns a list of "0, 1, 1, 2, 3, 5, 8"

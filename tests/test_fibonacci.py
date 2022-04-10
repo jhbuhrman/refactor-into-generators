@@ -8,7 +8,12 @@ from pytest_bdd import given, parsers, scenarios, then, when
 
 # Scenarios
 
-scenarios("features/first_fibonacci.feature", "features/fibonaccis.feature")
+scenarios(
+    "features/first_fibonacci.feature",
+    "features/fibonaccis.feature",
+    "features/fibonaccis2.feature",
+    "features/more_fibonaccis.feature",
+)
 
 
 @dataclasses.dataclass()
@@ -39,7 +44,12 @@ def step_impl() -> None:
 
 @when(
     parsers.parse(
-        'I call the "{function_name}" function with parameter "{parameter:d}"'
+        'the developer calls the "{function_name}" function with param "{parameter:d}"'
+    )
+)
+@when(
+    parsers.parse(
+        'the dev calls "{function_name}" with param "{parameter:d}"'
     )
 )
 def step_impl(
@@ -64,14 +74,3 @@ def step_impl(state: TestState, int_sequence: list[int]) -> None:
 @then(parsers.parse('the function returns the value "{expected_value:d}"'))
 def step_impl(state: TestState, expected_value: int):
     assert state.return_value == expected_value
-
-
-@when('I call the "fib_ordinal" function with parameter <ordinal>')
-def step_impl():
-    raise NotImplementedError(
-        u'STEP: When I call the "fib_ordinal" function with parameter <ordinal>')
-
-
-@then("the function returns the value <fibonacci_number>")
-def step_impl():
-    raise NotImplementedError(u'STEP: Then the function returns the value <fibonacci_number>')

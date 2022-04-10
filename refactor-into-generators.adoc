@@ -36,6 +36,8 @@ by refactoring them into an elegant pipeline of
 
 * be more acquainted with the standard library `itertools` module and the `more-itertools` package
 
+// FIXME: perhaps add somthing about TDD/Gherking
+
 
 == Topics
 [role="incremental"]
@@ -43,7 +45,7 @@ by refactoring them into an elegant pipeline of
 * What is refactoring
 * Short intro on a Generator function
 * How to recognize some "patterns" of loop constructs as refactoring candidates
-* FIXME: what else?
+* FIXME: what else? Add later
 
 
 == A first example -- loops with similar code
@@ -55,7 +57,9 @@ by refactoring them into an elegant pipeline of
 --
 [quote, Wikipedia, Fibonacci Number]
 ____________________________________________________________________
-In mathematics, the **Fibonacci numbers** {startsb}...{endsb} form a sequence, the **Fibonacci sequence**, in which each number is the sum of the two preceding ones. The sequence commonly starts from 0 and 1, {startsb}...{endsb}
+In mathematics, the **Fibonacci numbers** [...] form a sequence, the
+**Fibonacci sequence**, in which each number is the sum of the two
+preceding ones. The sequence commonly starts from 0 and 1, [...]
 
 Starting from 0 and 1, the next few values in the sequence are:
 
@@ -75,8 +79,19 @@ ____________________________________________________________________
 include::{sourcedir}/tests/features/first_fibonacci.feature[]
 ----
 
+// FIXME - add a new slide here? (prevent information overflow?)
+//   If yes, just repeat the GIVEN - WHEN - THEN clauses of the previous
+
 [role="incremental"]
-* It is a convention to put in-line parameters (like `"10"`) between double quotes
+* There are many people advocating to put in-line parameters (like
+  `"10"`) between double quotes. That doesn't mean that it should be
+  seen a string of some sort, but rather as a clearl indication that it
+  is a parameter.
+
+// FIXME: also mention that Gherkin is mostly used for "business"
+//   functionality (check this out on Automation Panda), but I think
+//   it can be helpful for "lower level" functions as well, making it a
+//   clear specification.
 
 [role="incremental"]
 [horizontal]
@@ -85,7 +100,12 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 **Then**:: Describes the _outcome_ of the action
 
 [role="incremental"]
-(credits & more info: https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language/[Automation Panda])
+* Credits:
+  https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language
+// (credits & more info: https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language/[Automation Panda])
+
+// FIXME: Mention Pandy Knight, the owner of the Automation Panda site,
+//   who has given various presentations about Python and testing
 
 
 == Implementation
@@ -109,6 +129,8 @@ include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
 [role="incremental"]
 * Now the Product Owner gets really excited and asks for more functionality:
 
+// FIXME: perhaps change the word "excited" to something else?
+
 [role="incremental"]
 --
 [quote, Excited Product Owner, More Features]
@@ -128,7 +150,26 @@ include::{sourcedir}/tests/features/fibonaccis.feature[]
 [quote, Wikipedia, Fibonacci Number]
 ____________________________________________________________________
 
-{startsb}...{endsb} the next few values in the sequence are:
+[...] the next few values in the sequence are:
+
+{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+// index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
+____________________________________________________________________
+--
+
+
+== Parametrized testcases using Gherkin's _Scenario Outlines_
+[source,feature]
+----
+include::{sourcedir}/tests/features/fibonaccis2.feature[]
+----
+--
+
+* Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
+[quote, Wikipedia, Fibonacci Number]
+____________________________________________________________________
+
+[...] the next few values in the sequence are:
 
 {empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
 // index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
@@ -139,8 +180,24 @@ ____________________________________________________________________
 == Python source for the N'th Fibonacci number
 [source,python]
 ----
-include::{sourcedir}/src/fibonacci/before.py[lines="11..20"]
+include::{sourcedir}/src/fibonacci/before.py[lines="11..18"]
 ----
+
+
+== Now the Product Owner really get enthusiastic!
+--
+[quote, Even More Excited Product Owner, Even More features]
+____________________________________________________________________
+Can you also make functions that return ...
+
+* the first _n_ Fibonacci numbers,
+* the largest Fibonacci number less than _n_, and
+* the smallest Fibonacci number greater than or equal to _n_?
+____________________________________________________________________
+--
+
+
+== Some more Gherkin specs to prevent ambiguity
 
 
 // lines=5..10
@@ -205,7 +262,8 @@ Feature: Google Searching
 ----
 
 [role="incremental"]
-* It is a convention to put in-line parameters (like `"panda"`) between double quotes
+* There are many people advocating to put in-line parameters (like
+`"panda"`) between double quotes
 
 [role="incremental"]
 [horizontal]
