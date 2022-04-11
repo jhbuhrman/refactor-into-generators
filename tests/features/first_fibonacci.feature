@@ -1,7 +1,6 @@
 Feature: Fibonacci functionality
   As a curious person,
-  I want to see the a list of the Fibonacci numbers less than a certain
-    value,
+  I want to see a list of Fibonacci numbers less than a certain value,
   So that I can learn how they look like.
 
   Scenario: List of Fibonacci numbers less than N

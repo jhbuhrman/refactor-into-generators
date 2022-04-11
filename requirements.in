@@ -13,3 +13,6 @@ flake8-bugbear
 flake8-formatter-abspath
 isort
 pylint
+
+# formatting asciidoc
+pygments

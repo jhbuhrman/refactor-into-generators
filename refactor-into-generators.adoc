@@ -7,6 +7,11 @@
 :data-uri:
 :icons:
 :sourcedir: .
+:source-highlighter: pygments
+// :pygments-style: manni
+// :pygments-linenums-mode: inline
+
+
 
 // This is a comment
 
@@ -36,7 +41,7 @@ by refactoring them into an elegant pipeline of
 
 * be more acquainted with the standard library `itertools` module and the `more-itertools` package
 
-// FIXME: perhaps add somthing about TDD/Gherking
+// FIXME: perhaps add somthing about TDD/Gherkin
 
 
 == Topics
@@ -74,7 +79,7 @@ ____________________________________________________________________
 * And let's use the _Gherkin Language_ to specify this:
 
 [role="incremental"]
-[source,feature]
+[source,gherkin]
 ----
 include::{sourcedir}/tests/features/first_fibonacci.feature[]
 ----
@@ -85,7 +90,7 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 [role="incremental"]
 * There are many people advocating to put in-line parameters (like
   `"10"`) between double quotes. That doesn't mean that it should be
-  seen a string of some sort, but rather as a clearl indication that it
+  seen a string of some sort, but rather as a clear indication that it
   is a parameter.
 
 // FIXME: also mention that Gherkin is mostly used for "business"
@@ -109,28 +114,29 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 
 
 == Implementation
+// Highlight doesn't work (yet); perhaps CSS required?? [source,python,highlight=2..5]
 [role="incremental"]
 [source,python]
 ----
 include::{sourcedir}/src/fibonacci/typeless.py[]
 ----
+
 [role="incremental"]
 * Source: https://docs.python.org/3/tutorial/modules.html
-* ❓ Add type annotions ❓
+* ❓ Shall we add type annotations ❓
 
 
-== Implementation (with type annotations)
+== Implementation (type annotated)
 [source,python]
 ----
 include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
 ----
 * Source: https://docs.python.org/3/tutorial/modules.html
 
-[role="incremental"]
+== Product Owner is happy and wants more
 * Now the Product Owner gets really excited and asks for more functionality:
 
 // FIXME: perhaps change the word "excited" to something else?
-
 [role="incremental"]
 --
 [quote, Excited Product Owner, More Features]
@@ -140,11 +146,12 @@ ____________________________________________________________________
 --
 
 
-== Gherkin for the N'th Fibonacci number
-[source,feature]
+== Add Gherkin for the N'th Fibonacci number
+[source,gherkin]
 ----
 include::{sourcedir}/tests/features/fibonaccis.feature[]
 ----
+
 [role="incremental"]
 --
 [quote, Wikipedia, Fibonacci Number]
@@ -158,23 +165,12 @@ ____________________________________________________________________
 --
 
 
-== Parametrized testcases using Gherkin's _Scenario Outlines_
-[source,feature]
+== Parametrized testcases (_Scenario Outlines_)
+[source,gherkin]
 ----
 include::{sourcedir}/tests/features/fibonaccis2.feature[]
 ----
---
-
 * Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
-[quote, Wikipedia, Fibonacci Number]
-____________________________________________________________________
-
-[...] the next few values in the sequence are:
-
-{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-// index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
-____________________________________________________________________
---
 
 
 == Python source for the N'th Fibonacci number
@@ -197,8 +193,26 @@ ____________________________________________________________________
 --
 
 
-== Some more Gherkin specs to prevent ambiguity
+== As requested, in Gherkin
+[source,gherkin]
+----
+include::{sourcedir}/tests/features/more_fibonaccis.feature[]
+----
 
+== As requested, implemented (condensed)
+[source,python]
+----
+include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..34"]
+----
+
+== All function bodies on one single page
+
+[cols=2*]
+|===
+|bar
+|foo
+
+|===
 
 // lines=5..10
 
@@ -251,7 +265,7 @@ The Gherkin Language
 Gherkin: Standard Example
 -------------------------
 [role="incremental"]
-[source,feature]
+[source,gherkin]
 ----
 Feature: Google Searching
 
@@ -279,7 +293,7 @@ Gherkin Feature: Additional Steps
 [role="incremental"]
 * Using "And" and "But" to specify additional steps of the same kind as the previous one
 +
-[source,feature]
+[source,gherkin]
 ----
 Feature: Google Searching
   As a web surfer,
@@ -299,7 +313,7 @@ Feature: Google Searching
 
 Gherkin Features: Doc Strings, Step Tables
 ------------------------------------------
-[source,feature]
+[source,gherkin]
 ----
 Feature: Showcase entering large(r) text blobs and tables
   As a ...
@@ -330,7 +344,7 @@ Doc String and Step Tables can be used in any step ("Given", "When", or "Then")
 
 Gherkin: Background
 -------------------
-[source,feature]
+[source,gherkin]
 ----
 Feature: Some additional behave examples
 
@@ -365,7 +379,7 @@ Gherkin Feature: Scenario Outline
 [role="incremental"]
 * Using `Scenario Outline:` to repeat the tests with different sets of parameters
 +
-[source,feature]
+[source,gherkin]
 ----
 Feature: Google Searching
 
@@ -398,7 +412,7 @@ Making Your Gherkin Executable
 * PyCharm can generate skeleton code for you
 
 .Example step
-[source,feature]
+[source,gherkin]
 ----
     Given the following blob of text
       """
@@ -422,7 +436,7 @@ def step_impl(context: runner.Context) -> None:
 Making Your Gherkin Executable (2)
 ----------------------------------
 .Example step
-[source,feature]
+[source,gherkin]
 ----
     When the developer splits that text into its lines
 ----
@@ -440,7 +454,7 @@ def step_impl(context: runner.Context) -> None:
 
 
 .Another *When* step (from another scenario)
-[source,feature]
+[source,gherkin]
 ----
     When the developer selects a line with index "1" (counting from zero)
 ----
@@ -461,7 +475,7 @@ def step_impl(context: runner.Context, index: int) -> None:
 Making Your Gherkin Executable (3)
 ----------------------------------
 .Example step (Step Tables)
-[source,feature]
+[source,gherkin]
 ----
     Then the lines should look like
       | line           |
@@ -491,7 +505,7 @@ def step_impl(context: runner.Context) -> None:
 Making Your Gherkin Executable (4)
 ----------------------------------
 .Example step (plain parameter)
-[source,feature]
+[source,gherkin]
 ----
     Then the line should be "This is line 2"
 ----
@@ -507,7 +521,7 @@ def step_impl(context: runner.Context, line: str) -> None:
 ----
 
 .Example step (plain integer parameter)
-[source,feature]
+[source,gherkin]
 ----
     Then the count should be "3"
 ----

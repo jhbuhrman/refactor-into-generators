@@ -47,11 +47,7 @@ def step_impl() -> None:
         'the developer calls the "{function_name}" function with param "{parameter:d}"'
     )
 )
-@when(
-    parsers.parse(
-        'the dev calls "{function_name}" with param "{parameter:d}"'
-    )
-)
+@when(parsers.parse('the dev calls "{function_name}" with param "{parameter:d}"'))
 def step_impl(
     module: types.ModuleType, state: TestState, function_name: str, parameter: int
 ) -> None:

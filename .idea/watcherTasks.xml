@@ -5,7 +5,7 @@
       <option name="arguments" value="docbuild" />
       <option name="checkSyntaxErrors" value="false" />
       <option name="description" />
-      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="exitCodeBehavior" value="ALWAYS" />
       <option name="fileExtension" value="adoc" />
       <option name="immediateSync" value="true" />
       <option name="name" value="Make slides" />
