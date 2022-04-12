@@ -39,7 +39,7 @@ check: isort-check black-check flake8
 fixfmt: isort black
 
 # For building the slides
-SUBDIRS = docbuild
+SUBDIRS = docbuild docbuild-rjs
 
 .PHONY: all subdirs $(SUBDIRS)
 
@@ -47,4 +47,5 @@ subdirs: $(SUBDIRS)
 
 $(SUBDIRS):
 	[ -d $@ ] || mkdir -p $@
+	# $(MAKE) -C $@ -f ../Makefile.$@
 	$(MAKE) -C $@ -f ../Makefile.$@

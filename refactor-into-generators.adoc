@@ -1,15 +1,20 @@
 = When To Refactor Into Generators And How
 :author:    Jan-Hein Bührman
-:email:     jan-hein.buhrman@ordina.nl
-:backend:   slidy
-:stem:
-:max-width: 47em
+:email:     <jan-hein.buhrman@ordina.nl>
+// :backend:   slidy
+// :backend: revealjs
+// :stem:
+//:max-width: 60em
 :data-uri:
-:icons:
+// :icons:
 :sourcedir: .
-:source-highlighter: pygments
-// :pygments-style: manni
-// :pygments-linenums-mode: inline
+// beige, black, league, night, serif, simple, sky, solarized, white
+// :revealjs_theme: black
+//:revealjs_hash: true
+:source-highlighter: highlightjs
+//:source-highlighter: pygments
+//:pygments-style: manni
+//:pygments-linenums-mode: inline
 
 
 
@@ -116,7 +121,7 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 == Implementation
 // Highlight doesn't work (yet); perhaps CSS required?? [source,python,highlight=2..5]
 [role="incremental"]
-[source,python]
+[source,python,highlight=4..4|7..7]
 ----
 include::{sourcedir}/src/fibonacci/typeless.py[]
 ----

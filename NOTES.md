@@ -9,8 +9,12 @@ Here are some notes to self.
   - [AsciiDoc Language Documentation](https://docs.asciidoctor.org/asciidoc/latest/)
   - [AsciiDoc Writer's Guide](https://asciidoctor.org/docs/asciidoc-writers-guide/)
 - [reStructuredText to reveal.js](https://github.com/LLNL/rst2slides) could be a great alternative!
-    - See also [reveal.js](https://github.com/hakimel/reveal.js/)
-    - But only **after** you're have finished your slides in AsciiDoc
+  - See also [reveal.js](https://github.com/hakimel/reveal.js/)
+  - But only **after** you're have finished your slides in AsciiDoc
+  - Node / JavaScript setup: https://docs.asciidoctor.org/reveal.js-converter/latest/setup/node-js-setup/
+  - Config: https://docs.asciidoctor.org/reveal.js-converter/latest/converter/revealjs-options/
+  - For PDFs of your slides, including Notes, see
+    https://github.com/hakimel/reveal.js/blob/v3.9/README.md#pdf-export 
     
 ### Good presentations
 - Check out https://ep2019.europython.eu/events/tips/index.html

@@ -1,0 +1,28 @@
+{
+  "name": "refactor-into-generators",
+  "version": "1.0.0",
+  "description": "[//]: # (FIXME: add dependencies) [//]: # ( think of pygments out of your virtenv &#40;for PyCharm watcher-task to) [//]: # ( succeed&#41; because it doesn't use the virtual environment)",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhbuhrman/refactor-into-generators.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhbuhrman/refactor-into-generators/issues"
+  },
+  "homepage": "https://github.com/jhbuhrman/refactor-into-generators#readme",
+  "dependencies": {
+    "@asciidoctor/reveal.js": "^5.0.0-rc.1",
+    "asciidoctor": "^2.2.6"
+  }
+}
