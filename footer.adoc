@@ -1,0 +1,68 @@
+[subs="attributes"]
+++++
+<script type="text/javascript">
+
+</script>
+
+<style>
+.reveal pre {
+  width: 90%;
+  font-size: 80%;
+  // max-height: 800px;
+}
+
+.reveal pre code {
+  max-height: 800px;
+  height: 100%;
+}
+</style>
+
+
+<script type="text/javascript">
+    window.addEventListener("load", function() {
+<!--    	Reveal.configure({-->
+<!--          keyboard: {-->
+<!--             39: 'next', // Right Arrow-->
+<!--             37: 'prev'  // Left Arrow-->
+<!--          }-->
+<!--        });-->
+    Reveal.initialize({
+      // The "normal" size of the presentation, aspect ratio will
+      // be preserved when the presentation is scaled to fit different
+      // resolutions. Can be specified using percentage units.
+      //width: 960,
+      //height: 700,
+<!--      width: 1920,-->
+<!--      height: 1080,-->
+      width: 1600,
+      height: 900,
+
+      // Factor of the display size that should remain empty around
+      // the content
+      // margin: 0.04,
+      //margin: 0.10,
+
+      // Bounds for smallest/largest possible scale to apply to content
+      //minScale: 0.2,
+      //maxScale: 2.0,
+      // JHB
+      center: false
+});
+    } );
+</script>
+
+<script type="text/javascript">
+<!--    window.addEventListener("load", function() {-->
+
+<!--        revealDiv = document.querySelector("body div.reveal")-->
+<!--        footer = document.getElementById("jhbuhrman-footer");-->
+<!--        revealDiv.appendChild(footer);-->
+
+<!--    } );-->
+</script>
+<!--<div id="jhbuhrman-footer" class="footer">-->
+<!--    <span class="element">{twitter-tag}</span>-->
+<!--    <span class="element">{conference-tag}</span>-->
+<!--    <span class="element">{talk-tag}</span>-->
+<!--</div>-->
+++++

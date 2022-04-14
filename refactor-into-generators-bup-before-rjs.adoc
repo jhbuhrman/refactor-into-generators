@@ -5,20 +5,17 @@
 // :backend: revealjs
 // :stem:
 //:max-width: 66em
-:twitter-tag: @jbuhrman
-:conference-tag: @jug_DO
 :data-uri:
 // :icons:
 :sourcedir: .
 // beige, black, league, night, serif, simple, sky, solarized, white
-:revealjs_theme: moon
+:revealjs_theme: solarized
 :revealjs_hash: true
-:source-highlighter: highlight.js
+:source-highlighter: highlightjs
 //:source-highlighter: pygments
-//:highlight-style: github
+//:pygments-style: manni
 //:pygments-linenums-mode: inline
 
-include::footer.adoc[]
 
 
 // This is a comment
@@ -68,7 +65,7 @@ by refactoring them into an elegant pipeline of
 
 [role="incremental"]
 --
-[quote, Wikipedia, "Fibonacci Number"]
+[quote, Wikipedia, Fibonacci Number]
 ____________________________________________________________________
 In mathematics, the **Fibonacci numbers** [...] form a sequence, the
 **Fibonacci sequence**, in which each number is the sum of the two
@@ -87,7 +84,7 @@ ____________________________________________________________________
 * And let's use the _Gherkin Language_ to specify this:
 
 [role="incremental"]
-[source,gherkin]
+[source,feature]
 ----
 include::{sourcedir}/tests/features/first_fibonacci.feature[]
 ----
@@ -95,23 +92,22 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 // FIXME - add a new slide here? (prevent information overflow?)
 //   If yes, just repeat the GIVEN - WHEN - THEN clauses of the previous
 
-//[role="incremental"]
-//* There are many people advocating to put in-line parameters (like
-//  `"10"`) between double quotes. That doesn't mean that it should be
-//  seen a string of some sort, but rather as a clear indication that it
-//  is a parameter.
+[role="incremental"]
+* There are many people advocating to put in-line parameters (like
+  `"10"`) between double quotes. That doesn't mean that it should be
+  seen a string of some sort, but rather as a clear indication that it
+  is a parameter.
 
 // FIXME: also mention that Gherkin is mostly used for "business"
 //   functionality (check this out on Automation Panda), but I think
 //   it can be helpful for "lower level" functions as well, making it a
 //   clear specification.
 
-
-//[role="incremental"]
-//[horizontal]
-//**Given**:: Describes a stable, intial state of the system _before_ the relevant action is taken
-//**When**:: Describes the _action_ that is relevant for this specific scenario
-//**Then**:: Describes the _outcome_ of the action
+[role="incremental"]
+[horizontal]
+**Given**:: Describes a stable, intial state of the system _before_ the relevant action is taken
+**When**:: Describes the _action_ that is relevant for this specific scenario
+**Then**:: Describes the _outcome_ of the action
 
 [role="incremental"]
 * Credits:
@@ -125,7 +121,7 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 == Implementation
 // Highlight doesn't work (yet); perhaps CSS required?? [source,python,highlight=2..5]
 [role="incremental"]
-[source,python,highlight="4,7"]
+[source,python,highlight=4..4|7..7]
 ----
 include::{sourcedir}/src/fibonacci/typeless.py[]
 ----
@@ -156,26 +152,26 @@ ____________________________________________________________________
 
 
 == Add Gherkin for the N'th Fibonacci number
-[source,gherkin]
+[source,feature]
 ----
 include::{sourcedir}/tests/features/fibonaccis.feature[]
 ----
-//
-//[role="incremental"]
-//--
-//[quote, Wikipedia, Fibonacci Number]
-//____________________________________________________________________
-//
-//[...] the next few values in the sequence are:
-//
-//{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-// // index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
-//____________________________________________________________________
-//--
+
+[role="incremental"]
+--
+[quote, Wikipedia, Fibonacci Number]
+____________________________________________________________________
+
+[...] the next few values in the sequence are:
+
+{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+// index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
+____________________________________________________________________
+--
 
 
 == Parametrized testcases (_Scenario Outlines_)
-[source,gherkin]
+[source,feature]
 ----
 include::{sourcedir}/tests/features/fibonaccis2.feature[]
 ----
@@ -203,7 +199,7 @@ ____________________________________________________________________
 
 
 == As requested, in Gherkin
-[source,gherkin]
+[source,feature]
 ----
 include::{sourcedir}/tests/features/more_fibonaccis.feature[]
 ----
@@ -274,7 +270,7 @@ The Gherkin Language
 Gherkin: Standard Example
 -------------------------
 [role="incremental"]
-[source,gherkin]
+[source,feature]
 ----
 Feature: Google Searching
 
@@ -302,7 +298,7 @@ Gherkin Feature: Additional Steps
 [role="incremental"]
 * Using "And" and "But" to specify additional steps of the same kind as the previous one
 +
-[source,gherkin]
+[source,feature]
 ----
 Feature: Google Searching
   As a web surfer,
@@ -322,7 +318,7 @@ Feature: Google Searching
 
 Gherkin Features: Doc Strings, Step Tables
 ------------------------------------------
-[source,gherkin]
+[source,feature]
 ----
 Feature: Showcase entering large(r) text blobs and tables
   As a ...
@@ -353,7 +349,7 @@ Doc String and Step Tables can be used in any step ("Given", "When", or "Then")
 
 Gherkin: Background
 -------------------
-[source,gherkin]
+[source,feature]
 ----
 Feature: Some additional behave examples
 
@@ -388,7 +384,7 @@ Gherkin Feature: Scenario Outline
 [role="incremental"]
 * Using `Scenario Outline:` to repeat the tests with different sets of parameters
 +
-[source,gherkin]
+[source,feature]
 ----
 Feature: Google Searching
 
@@ -421,7 +417,7 @@ Making Your Gherkin Executable
 * PyCharm can generate skeleton code for you
 
 .Example step
-[source,gherkin]
+[source,feature]
 ----
     Given the following blob of text
       """
@@ -445,7 +441,7 @@ def step_impl(context: runner.Context) -> None:
 Making Your Gherkin Executable (2)
 ----------------------------------
 .Example step
-[source,gherkin]
+[source,feature]
 ----
     When the developer splits that text into its lines
 ----
@@ -463,7 +459,7 @@ def step_impl(context: runner.Context) -> None:
 
 
 .Another *When* step (from another scenario)
-[source,gherkin]
+[source,feature]
 ----
     When the developer selects a line with index "1" (counting from zero)
 ----
@@ -484,7 +480,7 @@ def step_impl(context: runner.Context, index: int) -> None:
 Making Your Gherkin Executable (3)
 ----------------------------------
 .Example step (Step Tables)
-[source,gherkin]
+[source,feature]
 ----
     Then the lines should look like
       | line           |
@@ -514,7 +510,7 @@ def step_impl(context: runner.Context) -> None:
 Making Your Gherkin Executable (4)
 ----------------------------------
 .Example step (plain parameter)
-[source,gherkin]
+[source,feature]
 ----
     Then the line should be "This is line 2"
 ----
@@ -530,7 +526,7 @@ def step_impl(context: runner.Context, line: str) -> None:
 ----
 
 .Example step (plain integer parameter)
-[source,gherkin]
+[source,feature]
 ----
     Then the count should be "3"
 ----

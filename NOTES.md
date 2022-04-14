@@ -14,7 +14,11 @@ Here are some notes to self.
   - Node / JavaScript setup: https://docs.asciidoctor.org/reveal.js-converter/latest/setup/node-js-setup/
   - Config: https://docs.asciidoctor.org/reveal.js-converter/latest/converter/revealjs-options/
   - For PDFs of your slides, including Notes, see
-    https://github.com/hakimel/reveal.js/blob/v3.9/README.md#pdf-export 
+    https://github.com/hakimel/reveal.js/blob/v3.9/README.md#pdf-export
+  - A good example(?): https://github.com/schauder/spring-data-reactive-talk 
+  - https://revealjs.com/presentation-size/
+  - https://github.com/schauder/spring-data-reactive-talk/blob/master/src/main/sass/schauderhaft.scss
+  - 
     
 ### Good presentations
 - Check out https://ep2019.europython.eu/events/tips/index.html

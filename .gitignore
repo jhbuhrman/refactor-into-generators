@@ -153,3 +153,4 @@ cython_debug/
 /docbuild/
 /docbuild-rjs/
 /node_modules/
+/refactor-into-generators.html

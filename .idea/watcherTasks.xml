@@ -22,19 +22,19 @@
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="docbuild-rjs" />
+      <option name="arguments" value="scripts/docbuild-rjs.sh refactor-into-generators.adoc refactor-into-generators.html" />
       <option name="checkSyntaxErrors" value="false" />
       <option name="description" />
       <option name="exitCodeBehavior" value="ALWAYS" />
       <option name="fileExtension" value="adoc" />
       <option name="immediateSync" value="true" />
       <option name="name" value="Make slides w revealjs" />
-      <option name="output" value="docbuil-rjs/refactor-into-generators.html" />
+      <option name="output" value="refactor-into-generators.html" />
       <option name="outputFilters">
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="make" />
+      <option name="program" value="bash" />
       <option name="runOnExternalChanges" value="false" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="false" />
