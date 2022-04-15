@@ -2,6 +2,19 @@
 
 Here are some notes to self.
 
+### State per 2022-04-15
+
+- source doc is `refactor-into-generators.adoc`
+- some RevealJS adaptions are in `rjs_settings.adoc`
+- I'm using `asciidoc` (via `brew`) with the revealjs backend, as per
+  https://docs.asciidoctor.org/reveal.js-converter/latest/setup/node-js-setup/ 
+- The `Makefile.docbuild-rjs` is defunct - the current setup doesn't like
+  the generated `.html` be installed in a subdirectory
+- I have a asciidoc plugin installed in PyCharm
+- use `bash scripts/docbuild-rjs.sh refactor-into-generators.adoc refactor-into-generators.html`
+  to build the resulting slide deck
+- I have configured a PyCharm "File Watcher" triggering this command automatically on file save
+
 ### Slide technologies:
 
 - [AsciiDoc with slidy backend](https://asciidoc-py.github.io/slidy.html), see also following additional resources:

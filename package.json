@@ -23,7 +23,6 @@
   "homepage": "https://github.com/jhbuhrman/refactor-into-generators#readme",
   "dependencies": {
     "@asciidoctor/reveal.js": "^5.0.0-rc.1",
-    "asciidoctor": "^2.2.6",
-    "highlight.js": "^11.5.1"
+    "asciidoctor": "^2.2.6"
   }
 }

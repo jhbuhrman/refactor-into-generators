@@ -6,19 +6,21 @@
 // :stem:
 //:max-width: 66em
 :twitter-tag: @jbuhrman
-:conference-tag: @jug_DO
+:conference-tag: @FIXME
 :data-uri:
 // :icons:
 :sourcedir: .
 // beige, black, league, night, serif, simple, sky, solarized, white
-:revealjs_theme: moon
+:revealjs_theme: beige
+// "moon" is an alternative if you don't get the syntax highlighting
+// in a light theme
 :revealjs_hash: true
 :source-highlighter: highlight.js
 //:source-highlighter: pygments
 //:highlight-style: github
 //:pygments-linenums-mode: inline
 
-include::footer.adoc[]
+include::rjs_settings.adoc[]
 
 
 // This is a comment
@@ -49,27 +51,28 @@ by refactoring them into an elegant pipeline of
 
 * be more acquainted with the standard library `itertools` module and the `more-itertools` package
 
+// FIXME: shorter scentences on slide - put full text in notes
 // FIXME: perhaps add somthing about TDD/Gherkin
 
 
 == Topics
 [role="incremental"]
-* A first example: loops with similar code but with different start/stop/selection criteria
+* Loops with similar code but with different start/stop/selection criteria
 * What is refactoring
 * Short intro on a Generator function
 * How to recognize some "patterns" of loop constructs as refactoring candidates
 * FIXME: what else? Add later
 
 
-== A first example -- loops with similar code
+== Loops with similar code
+(a fictional story)
 [role="incremental"]
 * Suppose your Product Owner requires a function that returns a list of all Fibonacci number less than _n_
 * Who knows what a Fibonacci number is? ✋
 
-[role="incremental"]
+== Fibonacci Number (definition)
+[quote, Wikipedia, "Fibonacci number"]
 --
-[quote, Wikipedia, "Fibonacci Number"]
-____________________________________________________________________
 In mathematics, the **Fibonacci numbers** [...] form a sequence, the
 **Fibonacci sequence**, in which each number is the sum of the two
 preceding ones. The sequence commonly starts from 0 and 1, [...]
@@ -77,20 +80,21 @@ preceding ones. The sequence commonly starts from 0 and 1, [...]
 Starting from 0 and 1, the next few values in the sequence are:
 
 {empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-____________________________________________________________________
 --
 
 
-== Specify the test first (Test-Driven)
-[role="incremental"]
-* Let's specify the test first so that we exactly know what we need to develop
-* And let's use the _Gherkin Language_ to specify this:
+//== Specify the test first (Test-Driven)
+//[role="incremental"]
+//* Let's specify the test first so that we exactly know what we need to develop
+//* And let's use the _Gherkin Language_ to specify this:
+//
+//[role="incremental"]
+//[source,gherkin]
+//----
+//include::{sourcedir}/tests/features/first_fibonacci.feature[]
+//----
 
-[role="incremental"]
-[source,gherkin]
-----
-include::{sourcedir}/tests/features/first_fibonacci.feature[]
-----
+// FIXME FIXME: perhaps the persona should be "Fibonaccista" ?
 
 // FIXME - add a new slide here? (prevent information overflow?)
 //   If yes, just repeat the GIVEN - WHEN - THEN clauses of the previous
@@ -113,29 +117,29 @@ include::{sourcedir}/tests/features/first_fibonacci.feature[]
 //**When**:: Describes the _action_ that is relevant for this specific scenario
 //**Then**:: Describes the _outcome_ of the action
 
-[role="incremental"]
-* Credits:
-  https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language
+//[role="incremental"]
+//* Credits:
+//  https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language
 // (credits & more info: https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language/[Automation Panda])
 
 // FIXME: Mention Pandy Knight, the owner of the Automation Panda site,
 //   who has given various presentations about Python and testing
 
 
+//== Implementation
+// // Highlight doesn't work (yet); perhaps CSS required?? [source,python,highlight=2..5]
+//[role="incremental"]
+//[source,python,highlight="4,7"]
+//----
+//include::{sourcedir}/src/fibonacci/typeless.py[]
+//----
+//
+//[role="incremental"]
+//* Source: https://docs.python.org/3/tutorial/modules.html
+//* ❓ Shall we add type annotations ❓
+
+
 == Implementation
-// Highlight doesn't work (yet); perhaps CSS required?? [source,python,highlight=2..5]
-[role="incremental"]
-[source,python,highlight="4,7"]
-----
-include::{sourcedir}/src/fibonacci/typeless.py[]
-----
-
-[role="incremental"]
-* Source: https://docs.python.org/3/tutorial/modules.html
-* ❓ Shall we add type annotations ❓
-
-
-== Implementation (type annotated)
 [source,python]
 ----
 include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
@@ -189,16 +193,20 @@ include::{sourcedir}/src/fibonacci/before.py[lines="11..18"]
 ----
 
 
-== Now the Product Owner really get enthusiastic!
---
-[quote, Even More Excited Product Owner, Even More features]
-____________________________________________________________________
-Can you also make functions that return ...
 
-* the first _n_ Fibonacci numbers,
-* the largest Fibonacci number less than _n_, and
-* the smallest Fibonacci number greater than or equal to _n_?
-____________________________________________________________________
+== Now the Product Owner really gets enthusiastic!
+[quote, Even More Excited Product Owner, Even More features]
+--
+Now that we have functions for ...
+
+* Fibonacci numbers up to N,
+* the N'th Fibonacci number,
++
+..., can you also make functions that return ...
++
+* the first N Fibonacci numbers,
+* the largest Fibonacci number less than N, and
+* the smallest Fibonacci number greater than or equal to N?
 --
 
 
@@ -214,16 +222,82 @@ include::{sourcedir}/tests/features/more_fibonaccis.feature[]
 include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..34"]
 ----
 
-== All function bodies on one single page
+
+== All (shortened) function bodies on one single page
 
 [cols=2*]
 |===
-|bar
-|foo
+a|[source,python]
+include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="2..8"]
+a|[source,python]
+include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..22"]
 
+a|[source,python]
+include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="10..14"]
+a|[source,python]
+include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="24..28"]
+
+|Do you see a pattern? ✋
+a|[source,python]
+include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="30..34"]
 |===
 
-// lines=5..10
+
+== The pattern
+
+[source,python]
+----
+def some_fib_related_func(some_parameter):
+    # (PERHAPS SOME LIST INITIALIZATION)
+    a, b = 0, 1  # <1>
+    while "some condition or otherwise a for-loop":  # <2>
+        # (PERHAPS APPEND SOMETHING TO THE LIST)
+        a, b = b, a + b  # <3>
+    return a  # OR RETURN THE LIST <4>
+----
+<1> The variables `a` and `b` are initialized to their initial values
+<2> Some `while` or `for` loop is set up
+<3> The variables `a` and `b` are assigned their new respective values
+<4> The desired calculated value, or a list of these values, is returned
+
+// FIXME: move this terminology to the beginning, where I explain the first fib func
+//<1> The two Fibonacci "accumulators" are initialized
+//<2> Some loop with some condition is set up
+//<3> The two Fibonacci "accumulators" get their respective new values
+
+
+== Time to Start Refactoring Your Code
+
+**(because you don't like redundant code)**
+
+❓ Refactoring ✋
+
+
+== Refactoring
+
+[quote, Wikipedia, "Code refactoring"]
+--
+In computer programming and software design, **code refactoring** is the process of
+restructuring existing computer code [...] without changing its external behavior.
+
+Refactoring is intended to improve the design, structure, and/or implementation of the software (its non-functional attributes), while preserving its functionality.
+
+Potential advantages of refactoring may include improved code readability and reduced complexity; these can improve the source code's maintainability and create a simpler, cleaner, or more expressive internal architecture or object model to improve extensibility. [...]
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+== FIXME CURRENT END OF PRESENTATION
 
 //== Test
 //[role="incremental"]
