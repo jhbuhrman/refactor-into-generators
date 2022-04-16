@@ -21,13 +21,13 @@ def fib_ordinal(n):
     return one(islice(fib_gen(), n, n + 1))
 
 
-def fib_first_n(n):
+def first_n_fibs(n):
     return list(islice(fib_gen(), n))
 
 
-def largest_fib_less_than_n(n):
+def largest_fib_less_than(n):
     return last(takewhile(lambda value: value < n, fib_gen()), None)
 
 
-def smallest_fib_greater_equal_n(n):
+def smallest_fib_greater_equal(n):
     return first(dropwhile(lambda value: value < n, fib_gen()), None)

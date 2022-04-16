@@ -32,7 +32,7 @@ def first_n_fibs(n: int) -> list[int]:
 
 def largest_fib_less_than(n: int) -> int:
     """Return largest Fibonacci number less than n."""
-    if n <= 0:
+    if n < 1:
         raise ValueError(f"n ({n!r}) should be a positive integer")
     a, b = 0, 1
     while b < n:
@@ -41,9 +41,7 @@ def largest_fib_less_than(n: int) -> int:
 
 
 def smallest_fib_greater_equal(n: int) -> int:
-    """Return largest Fibonacci number less than n."""
-    if n < 0:
-        raise ValueError(f"n ({n!r}) should be a non-negative integer")
+    """Return smallest Fibonacci greater than or equal to n."""
     a, b = 0, 1
     while a < n:
         a, b = b, a + b
