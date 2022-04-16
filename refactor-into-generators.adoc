@@ -8,7 +8,7 @@
 :twitter-tag: @jbuhrman
 :conference-tag: @FIXME
 :data-uri:
-// :icons:
+:icons: font
 :sourcedir: .
 // beige, black, league, night, serif, simple, sky, solarized, white
 :revealjs_theme: beige
@@ -42,14 +42,16 @@ include::rjs_settings.adoc[]
 After this presentation, you will: ...
 
 [role="incremental"]
-* be able to _recognize_ certain loop constructs as candidate for refactoring,
+* be able to _recognize_ certain loop constructs as candidate for
+  refactoring,
 
-* know _how_ to convert these constructs into more maintainable _Pythonic_ code,
+* know _how_ to convert these constructs into more maintainable
+  _Pythonic_ code,
 +
-by refactoring them into an elegant pipeline of
- generators.
+by refactoring them into an elegant pipeline of generators.
 
-* be more acquainted with the standard library `itertools` module and the `more-itertools` package
+* be more acquainted with the standard library `itertools` module and
+  the `more-itertools` package
 
 // FIXME: shorter scentences on slide - put full text in notes
 // FIXME: perhaps add somthing about TDD/Gherkin
@@ -57,17 +59,20 @@ by refactoring them into an elegant pipeline of
 
 == Topics
 [role="incremental"]
-* Loops with similar code but with different start/stop/selection criteria
+* Loops with similar code but with different start/stop/selection
+  criteria
 * What is refactoring
 * Short intro on a Generator function
-* How to recognize some "patterns" of loop constructs as refactoring candidates
+* How to recognize some "patterns" of loop constructs as refactoring
+  candidates
 * FIXME: what else? Add later
 
 
 == Loops with similar code
 (a fictional story)
 [role="incremental"]
-* Suppose your Product Owner requires a function that returns a list of all Fibonacci number less than _n_
+* Suppose your Product Owner requires a function that returns a list of
+  all Fibonacci number less than _n_
 * Who knows what a Fibonacci number is? ✋
 
 == Fibonacci Number (definition)
@@ -147,14 +152,16 @@ include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
 * Source: https://docs.python.org/3/tutorial/modules.html
 
 == Product Owner is happy and wants more
-* Now the Product Owner gets really excited and asks for more functionality:
+* Happy with the delivered result, the Product Owner asks for more
+  functionality:
 
 // FIXME: perhaps change the word "excited" to something else?
 [role="incremental"]
 --
-[quote, Excited Product Owner, More Features]
+[quote, Happy Product Owner, More Features]
 ____________________________________________________________________
-Can you also make a function that returns the _n_'th Fibonacci number (counting from zero)?
+Can you also make a function that returns the _n_'th Fibonacci number
+(counting from zero)?
 ____________________________________________________________________
 --
 
@@ -265,6 +272,12 @@ def some_fib_related_func(some_parameter):
 //<2> Some loop with some condition is set up
 //<3> The two Fibonacci "accumulators" get their respective new values
 
+[.notes]
+--
+* Now that you've seen this pattern, you start looking for ways to het rid of the apparent _redundancy_ of code.
+--
+
+
 
 == Time to Start Refactoring Your Code
 
@@ -285,15 +298,48 @@ Refactoring is intended to improve the design, structure, and/or implementation 
 Potential advantages of refactoring may include improved code readability and reduced complexity; these can improve the source code's maintainability and create a simpler, cleaner, or more expressive internal architecture or object model to improve extensibility. [...]
 --
 
+== Extracting Common Parts Not Doable?
+
+It seems impossible to extract common parts of the code into functions
+
+It is mixed up with control flow constructs -- `while` or `for` loops
+
+Perhaps combine the requested functions ("mode flags") ❓
 
 
+== Experiment: Combine The First Two Functions
+
+WARNING: Put on your Peril Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/first_two_combined.py[]
+--
+
+[.notes]
+--
+* You should not take this contrived example too seriously; it just demonstrates that the resulting code isn't quite _maintable_ and this isn't the way to go
+--
 
 
+== Refactoring The Right Way: Single Responsibility
+
+It's all about separation of concerns
+
+* The _common_ part between all functions:
+** producing Fibonacci numbers
+* The _differing_ parts between all functions:
+** loop end criteria
+** how to further process the generated Fibonacci numbers
+* The _challenge_:
+** how to separate the _common_ part from the _differing_ part(s)
 
 
+== Solution: Use a Fibonacci Number _Generator_
 
+FIXME: https://en.wikipedia.org/wiki/Generator_(computer_programming)
 
-
+For the speaker notes: What you have to realize, is that there is a _data producing_ part in your code. And that's the part that you can isolate.
 
 
 
