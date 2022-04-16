@@ -1,3 +1,4 @@
+@first_two
 Feature: More Fibonacci's
 
   Scenario Outline: The N'th Fibonacci number (ordinal counting from 0)

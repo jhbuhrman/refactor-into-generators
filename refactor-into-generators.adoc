@@ -226,7 +226,7 @@ include::{sourcedir}/tests/features/more_fibonaccis.feature[]
 == As requested, implemented (condensed)
 [source,python]
 ----
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..34"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="16..34"]
 ----
 
 
@@ -235,18 +235,18 @@ include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..34"]
 [cols=2*]
 |===
 a|[source,python]
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="2..8"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="2..8"]
 a|[source,python]
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..22"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="16..22"]
 
 a|[source,python]
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="10..14"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="10..14"]
 a|[source,python]
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="24..28"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="24..28"]
 
 |Do you see a pattern? ✋
 a|[source,python]
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="30..34"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="30..34"]
 |===
 
 

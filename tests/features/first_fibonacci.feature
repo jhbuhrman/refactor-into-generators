@@ -1,3 +1,4 @@
+@first_two
 Feature: Fibonacci functionality
   As a curious person,
   I want to see a list of Fibonacci numbers less than a certain value,

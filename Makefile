@@ -34,14 +34,21 @@ black-check:
 flake8:
 	flake8 $(PY_SOURCE_ROOT_DIRS)
 
-check: isort-check black-check flake8
+check: isort-check black-check flake8 test-all
+
+FIB_MODULES = before before_compressed first_two_combined refactored
+
+test-all: $(FIB_MODULES)
+
+$(FIB_MODULES):
+	pytest --fib-module=$@
 
 fixfmt: isort black
 
 # For building the slides
 SUBDIRS = docbuild docbuild-rjs
 
-.PHONY: all subdirs $(SUBDIRS)
+.PHONY: all subdirs $(SUBDIRS) $(FIB_MODULES)
 
 subdirs: $(SUBDIRS)
 

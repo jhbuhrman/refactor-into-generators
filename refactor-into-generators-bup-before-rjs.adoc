@@ -207,7 +207,7 @@ include::{sourcedir}/tests/features/more_fibonaccis.feature[]
 == As requested, implemented (condensed)
 [source,python]
 ----
-include::{sourcedir}/src/fibonacci/pre_refactor_compressed.py[lines="16..34"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="16..34"]
 ----
 
 == All function bodies on one single page
