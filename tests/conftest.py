@@ -27,7 +27,9 @@ def pytest_report_header(config: pytest.Config) -> str:
 def pytest_collection_modifyitems(config, items):
     if config.getoption("--fib-module") != "first_two_combined":
         return
-    skip_not_implemented = pytest.mark.skip(reason="is not marked @first_two and fib-module == \"first_two_combined\"")
+    skip_not_implemented = pytest.mark.skip(
+        reason='is not marked @first_two and fib-module == "first_two_combined"'
+    )
     for item in items:
         if "first_two" not in item.keywords:
             item.add_marker(skip_not_implemented)

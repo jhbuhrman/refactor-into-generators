@@ -88,16 +88,12 @@ Starting from 0 and 1, the next few values in the sequence are:
 --
 
 
-//== Specify the test first (Test-Driven)
-//[role="incremental"]
-//* Let's specify the test first so that we exactly know what we need to develop
-//* And let's use the _Gherkin Language_ to specify this:
-//
-//[role="incremental"]
-//[source,gherkin]
-//----
-//include::{sourcedir}/tests/features/first_fibonacci.feature[]
-//----
+== Specification in Gherkin
+
+[source,gherkin]
+----
+include::{sourcedir}/tests/features/fib_list_to.feature[lines="2.."]
+----
 
 // FIXME FIXME: perhaps the persona should be "Fibonaccista" ?
 
@@ -188,7 +184,7 @@ include::{sourcedir}/tests/features/fibonaccis.feature[]
 == Parametrized testcases (_Scenario Outlines_)
 [source,gherkin]
 ----
-include::{sourcedir}/tests/features/fibonaccis2.feature[]
+include::{sourcedir}/tests/features/fib_ordinal.feature[]
 ----
 * Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
 

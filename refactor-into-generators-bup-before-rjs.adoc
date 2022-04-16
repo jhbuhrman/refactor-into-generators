@@ -86,7 +86,7 @@ ____________________________________________________________________
 [role="incremental"]
 [source,feature]
 ----
-include::{sourcedir}/tests/features/first_fibonacci.feature[]
+include::{sourcedir}/tests/features/fib_list_to.feature[]
 ----
 
 // FIXME - add a new slide here? (prevent information overflow?)
@@ -173,7 +173,7 @@ ____________________________________________________________________
 == Parametrized testcases (_Scenario Outlines_)
 [source,feature]
 ----
-include::{sourcedir}/tests/features/fibonaccis2.feature[]
+include::{sourcedir}/tests/features/fib_ordinal.feature[]
 ----
 * Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
 

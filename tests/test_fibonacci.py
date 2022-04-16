@@ -1,8 +1,7 @@
-import dataclasses
+import functools
 import importlib
 import types
-from collections import abc
-from typing import Callable, cast
+from typing import Any, Callable, cast
 
 import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
@@ -10,10 +9,13 @@ from pytest_bdd import given, parsers, scenarios, then, when
 # Scenarios
 
 scenarios(
-    "features/first_fibonacci.feature",
-    "features/fibonaccis.feature",
-    "features/fibonaccis2.feature",
-    "features/more_fibonaccis.feature",
+    "features/fib_list_to.feature",
+    "features/fib_ordinal.feature",
+    "features/fib_ordinal_ex.feature",
+    "features/fib_other_ex.feature",
+    "features/first_n_fibs.feature",
+    # "features/fibonaccis.feature",
+    # "features/more_fibonaccis.feature",
 )
 
 
@@ -32,10 +34,19 @@ def fib_module(request: pytest.FixtureRequest) -> types.ModuleType:
     target_fixture="fib_func_result",
 )
 @when(
+    parsers.parse(
+        'the developer calls "{function_name}" with parameter "{parameter:d}"'
+    ),
+    target_fixture="fib_func_result",
+)
+@when(
     parsers.parse('the dev calls "{function_name}" with param "{parameter:d}"'),
     target_fixture="fib_func_result",
 )
-def fib_func_result(fib_module, function_name: str, parameter: int) -> int | list[int]:
+def fib_func_result(
+    fib_module: types.ModuleType, function_name: str, parameter: int
+) -> int | list[int]:
+    # get the desired functiom from the designated module
     fib_function: Callable[[int], int | list[int]] = getattr(fib_module, function_name)
     return fib_function(parameter)
 
@@ -53,5 +64,44 @@ def step_impl(
 
 
 @then(parsers.parse('the function returns the value "{expected_value:d}"'))
-def step_impl(fib_func_result: int | list[int], expected_value: int):
+def step_impl(fib_func_result: int | list[int], expected_value: int) -> None:
     assert cast(int, fib_func_result) == expected_value
+
+
+@when(
+    parsers.parse('the dev attempts calling "{function_name}" with param "{param:d}"'),
+    target_fixture="fib_func_callable",
+)
+def fib_func_callable(
+    fib_module: types.ModuleType, function_name: str, param: int
+) -> Callable[[], int | list[int]]:
+    fib_function: Callable[[int], int | list[int]] = getattr(fib_module, function_name)
+    return functools.partial(fib_function, param)
+
+
+@then(parsers.parse('a "{exception_clsname}" is raised matching "{pattern}"'))
+def step_impl(
+    fib_func_callable: Callable[[], int | list[int]],
+    exception_clsname: str,
+    pattern: str,
+) -> None:
+    exception_cls = _get_exception_cls_by_name(exception_clsname)
+    with pytest.raises(exception_cls, match=pattern):
+        fib_func_callable()
+
+
+def _get_exception_cls_by_name(exception_clsname: str) -> type[Exception]:
+    module_str, sep, exception_basename = exception_clsname.partition(":")
+    if not sep:
+        module_str, sep, exception_basename = exception_clsname.rpartition(".")
+    if not sep:
+        module_str = "builtins"
+    module = importlib.import_module(module_str)
+    if "." in exception_clsname:
+        raise ValueError(
+            f"nested symbols ({exception_clsname!r}) are not supported yet"
+        )
+    exception_cls = getattr(module, exception_clsname)
+    if not issubclass(exception_cls, Exception):
+        raise TypeError(f"{exception_cls!r} is not a subclass of Exception")
+    return exception_cls

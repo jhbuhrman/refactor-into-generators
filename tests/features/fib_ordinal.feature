@@ -1,9 +1,9 @@
 @first_two
 Feature: More Fibonacci's
 
-  Scenario Outline: The N'th Fibonacci number (ordinal counting from 0)
+  Scenario Outline: The N'th Fibonacci number (counting from 0)
     Given a module providing Fibonacci related functionality
-    When the dev calls "fib_ordinal" with param "<ordinal>"
+    When the developer calls "fib_ordinal" with parameter "<ordinal>"
     Then the function returns the value "<fibonacci_number>"
 
   Examples:
