@@ -1,4 +1,4 @@
-Feature: Fibonacci's all the way
+Feature: First N Fibs
 
   Scenario Outline: List of first N Fibonacci numbers
     Given a module providing Fibonacci related functionality

@@ -14,8 +14,8 @@ scenarios(
     "features/fib_ordinal_ex.feature",
     "features/fib_other_ex.feature",
     "features/first_n_fibs.feature",
-    # "features/fibonaccis.feature",
-    # "features/more_fibonaccis.feature",
+    "features/largest_fib_less_than.feature",
+    "features/smallest_fib_greater_equal.feature",
 )
 
 

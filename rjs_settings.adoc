@@ -5,16 +5,21 @@
 </script>
 
 <style>
-.reveal pre {
-  width: 90%;
-  font-size: 80%;
-  // max-height: 800px;
+/*.reveal pre {*/
+.listingblock {
+  /*width: 90%;*/
+  font-size: 120%;
+  max-height: 1000px;
 }
 
-.reveal pre code {
-  max-height: 800px;
-  height: 100%;
-}
+/*. {*/
+/*  width: 90%;*/
+/*}*/
+
+/*.reveal pre code {*/
+/*  max-height: 800px;*/
+/*  height: 100%;*/
+/*}*/
 </style>
 
 
@@ -26,12 +31,12 @@
 <!--             37: 'prev'  // Left Arrow-->
 <!--          }-->
 <!--        });-->
-    Reveal.initialize({
+    Reveal.configure({
       // The "normal" size of the presentation, aspect ratio will
       // be preserved when the presentation is scaled to fit different
       // resolutions. Can be specified using percentage units.
-      //width: 960,
-      //height: 700,
+<!--      width: 960,-->
+<!--      height: 700,-->
 <!--      width: 1920,-->
 <!--      height: 1080,-->
       width: 1600,
@@ -40,7 +45,7 @@
       // Factor of the display size that should remain empty around
       // the content
       // margin: 0.04,
-      //margin: 0.10,
+      // margin: 0.10,
 
       // Bounds for smallest/largest possible scale to apply to content
       //minScale: 0.2,

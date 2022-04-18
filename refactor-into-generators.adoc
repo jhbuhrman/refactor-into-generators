@@ -2,9 +2,9 @@
 :author:    Jan-Hein Bührman
 :email:     <jan-hein.buhrman@ordina.nl>
 // :backend:   slidy
-// :backend: revealjs
-// :stem:
-//:max-width: 66em
+//:backend: revealjs
+//:stem:
+:max-width: 80em
 :twitter-tag: @jbuhrman
 :conference-tag: @FIXME
 :data-uri:
@@ -14,8 +14,12 @@
 :revealjs_theme: beige
 // "moon" is an alternative if you don't get the syntax highlighting
 // in a light theme
+// 25 mins
+:revealjs_totalTime: 1500
+:revealjs_controlsTutorial: false
 :revealjs_hash: true
 :source-highlighter: highlight.js
+:highlightjs-languages: gherkin
 //:source-highlighter: pygments
 //:highlight-style: github
 //:pygments-linenums-mode: inline
@@ -23,42 +27,30 @@
 include::rjs_settings.adoc[]
 
 
-// This is a comment
-
-// .Contents
-// [role="incremental"]
-// * Learning objectives
-// * A basic PyTest fixture
-// * Context Switch: _generator functions_ session
-// * _iterator protocol_ session
-// * Using fixtures to clean up stuff after test execution in PyTest
-// * Example (if time permits): temporarily manipulate environment
-// * Concluding remarks
-// * Recap
-
 
 == Goals
-[role="incremental"]
-After this presentation, you will: ...
 
-[role="incremental"]
+After this presentation, you will ...
+
+// [role="incremental"]
+
 * be able to _recognize_ certain loop constructs as candidate for
   refactoring,
-
 * know _how_ to convert these constructs into more maintainable
   _Pythonic_ code,
 +
 by refactoring them into an elegant pipeline of generators.
-
 * be more acquainted with the standard library `itertools` module and
   the `more-itertools` package
 
-// FIXME: shorter scentences on slide - put full text in notes
-// FIXME: perhaps add somthing about TDD/Gherkin
+// FIXME: shorter sentences on slide - put full text in notes
+// FIXME: perhaps add something about TDD/Gherkin
 
 
 == Topics
-[role="incremental"]
+
+// [role="incremental"]
+
 * Loops with similar code but with different start/stop/selection
   criteria
 * What is refactoring
@@ -68,14 +60,18 @@ by refactoring them into an elegant pipeline of generators.
 * FIXME: what else? Add later
 
 
-== Loops with similar code
-(a fictional story)
-[role="incremental"]
+== Variations on Fibonacci Number Selections
+
+.**(a fictional story)**
+
+// [role="incremental"]
+
 * Suppose your Product Owner requires a function that returns a list of
   all Fibonacci number less than _n_
 * Who knows what a Fibonacci number is? ✋
 
 == Fibonacci Number (definition)
+
 [quote, Wikipedia, "Fibonacci number"]
 --
 In mathematics, the **Fibonacci numbers** [...] form a sequence, the
@@ -88,7 +84,7 @@ Starting from 0 and 1, the next few values in the sequence are:
 --
 
 
-== Specification in Gherkin
+== First N Fibonacci Numbers in Gherkin
 
 [source,gherkin]
 ----
@@ -141,6 +137,7 @@ include::{sourcedir}/tests/features/fib_list_to.feature[lines="2.."]
 
 
 == Implementation
+
 [source,python]
 ----
 include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
@@ -148,11 +145,12 @@ include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
 * Source: https://docs.python.org/3/tutorial/modules.html
 
 == Product Owner is happy and wants more
+
 * Happy with the delivered result, the Product Owner asks for more
   functionality:
 
 // FIXME: perhaps change the word "excited" to something else?
-[role="incremental"]
+// [role="incremental"]
 --
 [quote, Happy Product Owner, More Features]
 ____________________________________________________________________
@@ -162,10 +160,11 @@ ____________________________________________________________________
 --
 
 
-== Add Gherkin for the N'th Fibonacci number
+=== Add Gherkin for the N'th Fibonacci number
+
 [source,gherkin]
 ----
-include::{sourcedir}/tests/features/fibonaccis.feature[]
+include::{sourcedir}/tests/features/fib_ordinal.feature[lines="2.."]
 ----
 //
 //[role="incremental"]
@@ -181,26 +180,27 @@ include::{sourcedir}/tests/features/fibonaccis.feature[]
 //--
 
 
-== Parametrized testcases (_Scenario Outlines_)
-[source,gherkin]
-----
-include::{sourcedir}/tests/features/fib_ordinal.feature[]
-----
-* Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
+// == Parametrized testcases (_Scenario Outlines_)
+//[source,gherkin]
+//----
+//include::{sourcedir}/tests/features/fib_ordinal.feature[]
+//----
+//* Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
 
 
 == Python source for the N'th Fibonacci number
+
 [source,python]
 ----
 include::{sourcedir}/src/fibonacci/before.py[lines="11..18"]
 ----
 
 
-
 == Now the Product Owner really gets enthusiastic!
-[quote, Even More Excited Product Owner, Even More features]
+
+[quote, Very Enthusiastic Product Owner, Even More features]
 --
-Now that we have functions for ...
+Now that we've got functions for ...
 
 * Fibonacci numbers up to N,
 * the N'th Fibonacci number,
@@ -213,17 +213,62 @@ Now that we have functions for ...
 --
 
 
-== As requested, in Gherkin
-[source,gherkin]
+=== The First N Fibs (Gherkin)
+
+[soure,gherkin]
 ----
-include::{sourcedir}/tests/features/more_fibonaccis.feature[]
+include::{sourcedir}/tests/features/first_n_fibs.feature[]
 ----
 
-== As requested, implemented (condensed)
+
+== The First N Fibs (Python)
+
 [source,python]
 ----
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="16..34"]
+include::{sourcedir}/src/fibonacci/before.py[lines="21..30"]
 ----
+
+
+=== Largest Fib Less Than N (Gherkin)
+
+[soure,gherkin]
+----
+include::{sourcedir}/tests/features/largest_fib_less_than.feature[]
+----
+
+
+== The Largest Fib Less Than N (Python)
+
+[source,python]
+----
+include::{sourcedir}/src/fibonacci/before.py[lines="33..40"]
+----
+
+
+=== Smallest Fib Greater/Equal N (Gherkin)
+
+[soure,gherkin]
+----
+include::{sourcedir}/tests/features/smallest_fib_greater_equal.feature[]
+----
+
+
+== Smallest Fib Greater/Equal N (Python)
+
+[source,python]
+----
+include::{sourcedir}/src/fibonacci/before.py[lines="43..48"]
+----
+
+
+// FIXME: THIS IN ALTERNATIVE WAY OF PRESENTING LAST 3 FIBS
+//== As requested, implemented (condensed)
+//[source,python]
+//----
+//include::{sourcedir}/src/fibonacci/before_compressed.py[lines="42..49"]
+//include::{sourcedir}/src/fibonacci/before_compressed.py[lines="52..57"]
+//include::{sourcedir}/src/fibonacci/before_compressed.py[lines="59..64"]
+//----
 
 
 == All (shortened) function bodies on one single page
@@ -231,19 +276,33 @@ include::{sourcedir}/src/fibonacci/before_compressed.py[lines="16..34"]
 [cols=2*]
 |===
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="2..8"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="25..30"]
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="16..22"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="43..48"]
 
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="10..14"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="35..38"]
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="24..28"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="53..56"]
 
 |Do you see a pattern? ✋
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="30..34"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="60..63"]
 |===
+
+//[.notes]
+//[cols=2*]
+//|===
+//|`fib_list_to`
+//|`first_n_fibs`
+//
+//|`fib_ordinal`
+//|`largest_fib_less_than`
+//
+//|{empty}
+//|`smallest_fib_greater_equal`
+//
+//|===
 
 
 == The pattern
@@ -251,12 +310,12 @@ include::{sourcedir}/src/fibonacci/before_compressed.py[lines="30..34"]
 [source,python]
 ----
 def some_fib_related_func(some_parameter):
-    # (PERHAPS SOME LIST INITIALIZATION)
+    # (SOMETIMES: INITIALIZE THE LIST)
     a, b = 0, 1  # <1>
     while "some condition or otherwise a for-loop":  # <2>
-        # (PERHAPS APPEND SOMETHING TO THE LIST)
+        # (SOMETIMES: APPEND SOMETHING TO THE LIST)
         a, b = b, a + b  # <3>
-    return a  # OR RETURN THE LIST <4>
+    return a  # OR SOMETIMES: RETURN THE LIST <4>
 ----
 <1> The variables `a` and `b` are initialized to their initial values
 <2> Some `while` or `for` loop is set up
@@ -267,6 +326,7 @@ def some_fib_related_func(some_parameter):
 //<1> The two Fibonacci "accumulators" are initialized
 //<2> Some loop with some condition is set up
 //<3> The two Fibonacci "accumulators" get their respective new values
+
 
 [.notes]
 --
@@ -286,12 +346,18 @@ def some_fib_related_func(some_parameter):
 
 [quote, Wikipedia, "Code refactoring"]
 --
-In computer programming and software design, **code refactoring** is the process of
-restructuring existing computer code [...] without changing its external behavior.
+In computer programming and software design, **code refactoring** is the
+process of restructuring existing computer code [...] without changing
+its external behavior.
 
-Refactoring is intended to improve the design, structure, and/or implementation of the software (its non-functional attributes), while preserving its functionality.
+Refactoring is intended to improve the design, structure, and/or
+implementation of the software (its non-functional attributes), while
+preserving its functionality.
 
-Potential advantages of refactoring may include improved code readability and reduced complexity; these can improve the source code's maintainability and create a simpler, cleaner, or more expressive internal architecture or object model to improve extensibility. [...]
+Potential advantages of refactoring may include improved code
+readability and reduced complexity; these can improve the source code's
+maintainability and create a simpler, cleaner, or more expressive
+internal architecture or object model to improve extensibility. [...]
 --
 
 == Extracting Common Parts Not Doable?
@@ -305,16 +371,20 @@ Perhaps combine the requested functions ("mode flags") ❓
 
 == Experiment: Combine The First Two Functions
 
+
 WARNING: Put on your Peril Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
+
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/first_two_combined.py[]
+include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="5..15"]
 --
 
 [.notes]
 --
-* You should not take this contrived example too seriously; it just demonstrates that the resulting code isn't quite _maintable_ and this isn't the way to go
+* Warning: what you see here, really hurts the eye
+** It starts already
+* Don't take this contrived example too seriously; it just demonstrates that the resulting code isn't quite _maintable_ and this isn't the way to go
 --
 
 
@@ -322,10 +392,10 @@ include::{sourcedir}/src/fibonacci/first_two_combined.py[]
 
 It's all about separation of concerns
 
-* The _common_ part between all functions:
+* The _common_ parts between all functions:
 ** producing Fibonacci numbers
 * The _differing_ parts between all functions:
-** loop end criteria
+** counting `for` loop or `while` loop with different end-criteria
 ** how to further process the generated Fibonacci numbers
 * The _challenge_:
 ** how to separate the _common_ part from the _differing_ part(s)
@@ -351,346 +421,6 @@ For the speaker notes: What you have to realize, is that there is a _data produc
 
 
 
-What Is Behavior Driven Development
------------------------------------
-[role="incremental"]
-* Centered around _feature behavior_ specifications
-** These are _concrete, realistic examples_ to create a shared understanding of how the system
-   (application) should behave
-** Defined as a scenario of _inputs_, _actions_, and _outcomes_
-** There are usually written in a special language, called _Gherkin_
-*** *Given* ... *When* ... *Then* ...
-* The Features / Scenarios can be extended into _executable_ tests, with relative ease
-* Embraces Test Driven Development (TDD) techniques and principles
-** Because the specifications are automatically _verifiable_
-* Goes well together with Domain Driven Design (DDD)
-** Because the scenarios are written in a non-technical language, using real world
-   (business) terminology
-
-
-What Are the Benefits of Behavior Driven Development
-----------------------------------------------------
-[role="incremental"]
-* _Concrete_ examples result in _unambiguous_ specification
-* A single common language between _Users_ & _Product Owner_, _Developers_, and _Testers_, and
-  possibly other non-technical stakeholders
-* It encompasses:
-** Requirements
-** Acceptance Criteria
-** Test Cases
-
-
-The Gherkin Language
---------------------
-
-✋ Who is familiar with Gherkin?
-
-
-
-Gherkin: Standard Example
--------------------------
-[role="incremental"]
-[source,gherkin]
-----
-Feature: Google Searching
-
-  Scenario: Simple Google search
-    Given the Google home page is displayed
-    When the user enters "panda" into the search bar
-    Then links related to "panda" are shown on the results page
-----
-
-[role="incremental"]
-* There are many people advocating to put in-line parameters (like
-`"panda"`) between double quotes
-
-[role="incremental"]
-[horizontal]
-Given:: Describes a stable, intial state of the system _before_ the relevant action is taken
-When:: Describes the _action_ that is relevant for this specific scenario
-Then:: Describes the _outcome_ of the action
-
-(credits: https://automationpanda.com/2017/01/26/bdd-101-the-gherkin-language/[Automation Panda])
-
-
-Gherkin Feature: Additional Steps
-----------------------------------
-[role="incremental"]
-* Using "And" and "But" to specify additional steps of the same kind as the previous one
-+
-[source,gherkin]
-----
-Feature: Google Searching
-  As a web surfer,
-  I want to search Google,
-  so that I can learn new things.
-
-  Scenario: Simple Google search
-    Given a web browser is on the Google page
-    When the search phrase "panda" is entered
-    Then results for "panda" are shown
-    And the related results include "Panda Express"
-    But the related results do not include "pandemonium"
-----
-
-(credits: https://automationpanda.com/2017/01/27/bdd-101-gherkin-by-example/[Automation Panda])
-
-
-Gherkin Features: Doc Strings, Step Tables
-------------------------------------------
-[source,gherkin]
-----
-Feature: Showcase entering large(r) text blobs and tables
-  As a ...
-  I want to ...
-  So that ...
-
-  Scenario: Behave can manage blobs of text
-    Given the following blob of text
-      """
-      This is line 1
-      This is line 2
-      This is line 3
-      """
-    When the developer splits that text into its lines
-    Then the lines should look like
-      | line           |
-      | This is line 1 |
-      | This is line 2 |
-      | This is line 3 |
-----
-[CAUTION]
-This is a bit of a contrived example, because this example has not been put in the language of
-the business domain.
-
-[TIP]
-Doc String and Step Tables can be used in any step ("Given", "When", or "Then")
-
-
-Gherkin: Background
--------------------
-[source,gherkin]
-----
-Feature: Some additional behave examples
-
-  Background: You can share the initial given steps for multiple scenarios
-    Given the following blob of text
-      """
-      This is line 1
-      This is line 2
-      This is line 3
-      """
-
-  Scenario: We can select a line from a blob of text
-    When the developer selects a line with index "1" (counting from zero)
-    Then the line should be "This is line 2"
-
-  Scenario: We can count the number of lines in a text
-    When the developer counts the number of lines
-    Then the count should be "3"
-----
-
-[NOTE]
-The _Background_ steps are repeated for every _Scenario_
-
-[CAUTION]
-Don't abuse _Background_ for a series of complicated "Given"
-steps, for example to initialize the database, or setup the API.
-That part should be solved with "environment" fixtures.
-
-
-Gherkin Feature: Scenario Outline
-----------------------------------
-[role="incremental"]
-* Using `Scenario Outline:` to repeat the tests with different sets of parameters
-+
-[source,gherkin]
-----
-Feature: Google Searching
-
-  Scenario Outline: Simple Google searches
-    Given a web browser is on the Google page
-    When the search phrase "<phrase>" is entered
-    Then results for "<phrase>" are shown
-    And the related results include "<related>"
-
-    Examples: Animals
-      | phrase   | related       |
-      | panda    | Panda Express |
-      | elephant | Elephant Man  |
-----
-
-(credits: https://automationpanda.com/2017/01/27/bdd-101-gherkin-by-example/[Automation Panda])
-
-[role="incremental"]
-[NOTE]
-You can compare this with `pytest.mark.parametrize` or `unittest.TestCase.subTest()`
-
-[role="incremental"]
-[TIP]
-Do not confuse this _Scenario Outline_ feature with the _Step Tables_ feature, shown earlier
-
-
-Making Your Gherkin Executable
-------------------------------
-* Step definitions glues the Gherkin specification to the Python code
-* PyCharm can generate skeleton code for you
-
-.Example step
-[source,gherkin]
-----
-    Given the following blob of text
-      """
-      This is line 1
-      This is line 2
-      This is line 3
-      """
-----
-
-
-.Corresponding step code
-[source,python]
-----
-@given("the following blob of text")
-def step_impl(context: runner.Context) -> None:
-    # `context.text` contains the blob of text
-    context.saved_text = context.text
-----
-
-
-Making Your Gherkin Executable (2)
-----------------------------------
-.Example step
-[source,gherkin]
-----
-    When the developer splits that text into its lines
-----
-
-
-.Corresponding step code
-[source,python]
-----
-@when("the developer splits that text into its lines")
-def step_impl(context: runner.Context) -> None:
-    # Add some typing, and fetch data from context
-    saved_text: str = context.saved_text
-    context.split_lines = saved_text.splitlines()
-----
-
-
-.Another *When* step (from another scenario)
-[source,gherkin]
-----
-    When the developer selects a line with index "1" (counting from zero)
-----
-
-
-.Corresponding step code
-[source,python]
-----
-@when('the developer selects a line with index "{index:d}" (counting from zero)')
-def step_impl(context: runner.Context, index: int) -> None:
-    # Note the `:d` format. `behave` uses the `parse` package by default
-    #  for argument matching (sort of inverse of `str.format()`)
-    # But `:s` is *not* `str`; simply don't use a specifier for strings.
-    context.selected_line = context.saved_text.splitlines()[index]
-----
-
-
-Making Your Gherkin Executable (3)
-----------------------------------
-.Example step (Step Tables)
-[source,gherkin]
-----
-    Then the lines should look like
-      | line           |
-      | This is line 1 |
-      | This is line 2 |
-      | This is line 3 |
-----
-
-
-.Corresponding step code
-[source,python]
-----
-@then("the lines should look like")
-def step_impl(context: runner.Context) -> None:
-    # context.table.headings contains the table headings
-    #   context.table.rows is a list of row elements
-    #   you can also obtain these by iterating over just context.table
-    # Note that you can also select an element from a table row by column name
-    # Below you see PyHamcrest in action (`assert_that()`, `contains_exactly()`)
-    # CAVEAT: the expected sequence in `contains_exactly()` is given as distinct arguments
-    assert_that(
-        context.split_lines, contains_exactly(*(row["line"] for row in context.table))
-    )
-----
-
-
-Making Your Gherkin Executable (4)
-----------------------------------
-.Example step (plain parameter)
-[source,gherkin]
-----
-    Then the line should be "This is line 2"
-----
-
-
-.Corresponding step code
-[source,python]
-----
-@then('the line should be "{line}"')
-def step_impl(context: runner.Context, line: str) -> None:
-    # PyHamcrest again: (`assert_that()`, `is_()`, `equal_to()`)
-    assert_that(context.selected_line, is_(equal_to(line)))
-----
-
-.Example step (plain integer parameter)
-[source,gherkin]
-----
-    Then the count should be "3"
-----
-
-
-.Corresponding step code
-[source,python]
-----
-@then('the count should be "{line_count:d}"')
-def step_impl(context: runner.Context, line_count: int) -> None:
-    assert_that(context.line_count, is_(equal_to(line_count)))
-----
-
-
-Hands-On❗️
----------
-The previous example in action
-
-
-Hands-On❗️
----------
-We're using the example of the Cosmic Python book: image:images/cosmic-python-book.jpeg[]
-
-* A furniture shop that decides to implement a new way of allocating stock
-* The new functionality allows for allocating stock while it's still underway (shipment)
-* _Too much domain knowledge_:
-** *A _SKU_ (Stock Keeping Unit) identifies a _product_*
-** _Customers_ place _orders_, with an _order reference_
-** *An order contains multiple _order lines_*
-** An order line contains a SKU and a _quantity_
-** *The _purchasing department_ orders small _batches_ of stock*
-** A batch of stock has a _reference_, a _SKU_ and a _quantity_
-** *We want to _allocate_ _order lines_ to _batches_*
-** A batch has an _ETA_ if it's currently shipping, and if not, it is in _warehouse stock_
-** The order of preference when allocating a batch, is
-*** the batch that is in _warehouse stock_, if that's the case
-*** the batch that is currently shipping, with a preference to the earliest ETA
-** When the batch is in warehouse stock, or otherwise when the batch arrives,
-*** the stock determined by the _order line_ is taken from the allocated to batch, and
-*** is sent to the _customer_
-** When you allocate _x_ units of stock to a batch, the _available quantity_ is reduced by _x_
-** You can't allocate to a batch if the available quantity is less than the quantity of the order
-   line
-** You can't allocate the same order line twice to the same batch
 
 
 Some loose ends
