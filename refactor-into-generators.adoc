@@ -1,6 +1,6 @@
 = When To Refactor Into Generators And How
 :author:    Jan-Hein Bührman
-:email:     <jan-hein.buhrman@ordina.nl>
+:email:     {lt}jan-hein.buhrman@ordina.nl{gt}
 // :backend:   slidy
 //:backend: revealjs
 //:stem:
@@ -18,13 +18,13 @@
 :revealjs_totalTime: 1500
 :revealjs_controlsTutorial: false
 :revealjs_hash: true
-:source-highlighter: highlight.js
-:highlightjs-languages: gherkin
+:source-highlighter: highlightjs
+:highlightjs-languages: gherkin,pycon
 //:source-highlighter: pygments
-//:highlight-style: github
+//:highlightjs-theme: a11y-light
 //:pygments-linenums-mode: inline
 
-include::rjs_settings.adoc[]
+include::revealjs_settings.adoc[]
 
 
 
@@ -51,7 +51,7 @@ by refactoring them into an elegant pipeline of generators.
 
 // [role="incremental"]
 
-* Loops with similar code but with different start/stop/selection
+* Loops with similar code but with varying start/stop/selection
   criteria
 * What is refactoring
 * Short intro on a Generator function
@@ -84,12 +84,13 @@ Starting from 0 and 1, the next few values in the sequence are:
 --
 
 
+
 == First N Fibonacci Numbers in Gherkin
 
 [source,gherkin]
-----
+--
 include::{sourcedir}/tests/features/fib_list_to.feature[lines="2.."]
-----
+--
 
 // FIXME FIXME: perhaps the persona should be "Fibonaccista" ?
 
@@ -136,12 +137,12 @@ include::{sourcedir}/tests/features/fib_list_to.feature[lines="2.."]
 //* ❓ Shall we add type annotations ❓
 
 
-== Implementation
+== Fibs Less Than N (Python)
 
 [source,python]
-----
+--
 include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
-----
+--
 * Source: https://docs.python.org/3/tutorial/modules.html
 
 == Product Owner is happy and wants more
@@ -163,37 +164,17 @@ ____________________________________________________________________
 === Add Gherkin for the N'th Fibonacci number
 
 [source,gherkin]
-----
+--
 include::{sourcedir}/tests/features/fib_ordinal.feature[lines="2.."]
-----
-//
-//[role="incremental"]
-//--
-//[quote, Wikipedia, Fibonacci Number]
-//____________________________________________________________________
-//
-//[...] the next few values in the sequence are:
-//
-//{empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-// // index::   0, 1, 2, 3, 4, 5, 6, {nbsp}7, {nbsp}8, {nbsp}9, 10, 11, {nbsp}12
-//____________________________________________________________________
-//--
-
-
-// == Parametrized testcases (_Scenario Outlines_)
-//[source,gherkin]
-//----
-//include::{sourcedir}/tests/features/fib_ordinal.feature[]
-//----
-//* Source: https://r-knott.surrey.ac.uk/Fibonacci/fibtable.html#100
+--
 
 
 == Python source for the N'th Fibonacci number
 
 [source,python]
-----
+--
 include::{sourcedir}/src/fibonacci/before.py[lines="11..18"]
-----
+--
 
 
 == Now the Product Owner really gets enthusiastic!
@@ -224,41 +205,41 @@ include::{sourcedir}/tests/features/first_n_fibs.feature[]
 == The First N Fibs (Python)
 
 [source,python]
-----
+--
 include::{sourcedir}/src/fibonacci/before.py[lines="21..30"]
-----
+--
 
 
 === Largest Fib Less Than N (Gherkin)
 
 [soure,gherkin]
-----
+--
 include::{sourcedir}/tests/features/largest_fib_less_than.feature[]
-----
+--
 
 
 == The Largest Fib Less Than N (Python)
 
 [source,python]
-----
+--
 include::{sourcedir}/src/fibonacci/before.py[lines="33..40"]
-----
+--
 
 
 === Smallest Fib Greater/Equal N (Gherkin)
 
 [soure,gherkin]
-----
+--
 include::{sourcedir}/tests/features/smallest_fib_greater_equal.feature[]
-----
+--
 
 
 == Smallest Fib Greater/Equal N (Python)
 
 [source,python]
-----
+--
 include::{sourcedir}/src/fibonacci/before.py[lines="43..48"]
-----
+--
 
 
 // FIXME: THIS IN ALTERNATIVE WAY OF PRESENTING LAST 3 FIBS
@@ -271,7 +252,7 @@ include::{sourcedir}/src/fibonacci/before.py[lines="43..48"]
 //----
 
 
-== All (shortened) function bodies on one single page
+== All (shortened) function bodies next to each other
 
 [cols=2*]
 |===
@@ -290,33 +271,38 @@ a|[source,python]
 include::{sourcedir}/src/fibonacci/before_compressed.py[lines="60..63"]
 |===
 
-//[.notes]
-//[cols=2*]
-//|===
-//|`fib_list_to`
-//|`first_n_fibs`
-//
-//|`fib_ordinal`
-//|`largest_fib_less_than`
-//
-//|{empty}
-//|`smallest_fib_greater_equal`
-//
-//|===
+
+[.notes]
+--
+[cols=2*]
+|===
+|fib_list_to
+|first_n_fibs
+
+|fib_ordinal
+|largest_fib_less_than
+
+|{empty}
+|smallest_fib_greater_equal
+
+|===
+
+* We're seeing a pattern here, don't we?
+--
 
 
 == The pattern
 
 [source,python]
-----
+--
 def some_fib_related_func(some_parameter):
     # (SOMETIMES: INITIALIZE THE LIST)
     a, b = 0, 1  # <1>
     while "some condition or otherwise a for-loop":  # <2>
         # (SOMETIMES: APPEND SOMETHING TO THE LIST)
         a, b = b, a + b  # <3>
-    return a  # OR SOMETIMES: RETURN THE LIST <4>
-----
+    return a  # (OR SOMETIMES: RETURN THE LIST) <4>
+--
 <1> The variables `a` and `b` are initialized to their initial values
 <2> Some `while` or `for` loop is set up
 <3> The variables `a` and `b` are assigned their new respective values
@@ -330,7 +316,7 @@ def some_fib_related_func(some_parameter):
 
 [.notes]
 --
-* Now that you've seen this pattern, you start looking for ways to het rid of the apparent _redundancy_ of code.
+* Now that you've seen this pattern, you start looking for ways to get rid of the apparent _redundancy_ of code.
 --
 
 
@@ -341,6 +327,15 @@ def some_fib_related_func(some_parameter):
 
 ❓ Refactoring ✋
 
+
+[.notes]
+--
+* I don't know how you experience it, but I always get this itchy
+  feeling if I see repetitions of code
+* and I start looking for ways how to refactor the code, extracting the common part into a function or method +
+  {nbsp}
+* ✋ So who knows what refactoring is?
+--
 
 == Refactoring
 
@@ -366,48 +361,163 @@ It seems impossible to extract common parts of the code into functions
 
 It is mixed up with control flow constructs -- `while` or `for` loops
 
-Perhaps combine the requested functions ("mode flags") ❓
+Perhaps combine the requested functions ("mode" flags or an enum) ❓
 
 
 == Experiment: Combine The First Two Functions
 
 
-WARNING: Put on your Peril Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
+WARNING: Put on your Peril-Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
 
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="5..15"]
+include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="5..18"]
 --
 
 [.notes]
 --
-* Warning: what you see here, really hurts the eye
-** It starts already
-* Don't take this contrived example too seriously; it just demonstrates that the resulting code isn't quite _maintable_ and this isn't the way to go
+* Warning: what you see here, really hurts the eye; It starts already with the ugly type annotation, and as the author of `Black`, Łukasz Langa, recently stated in a talk: "ugly type annotations are an indication of ugly code"
+* So don't take this contrived example too seriously; it just demonstrates that the resulting code isn't quite _maintable_ and this isn't the way to go
 --
 
 
 == Refactoring The Right Way: Single Responsibility
 
-It's all about separation of concerns
+//It's all about separation of concerns
 
-* The _common_ parts between all functions:
+* The _common_ part between all functions:
 ** producing Fibonacci numbers
-* The _differing_ parts between all functions:
-** counting `for` loop or `while` loop with different end-criteria
-** how to further process the generated Fibonacci numbers
-* The _challenge_:
-** how to separate the _common_ part from the _differing_ part(s)
+* The _mutually differing_ parts between all functions:
+** loop construct:
+*** either a `for` loop (counting), or
+*** a `while` loop (varying end-conditions)
+** how to further process the generated Fibonacci numbers:
+*** collected in a list, or
+*** just the last calculated "current" Fibonacci number
+
+**how to separate the _common_ part from the _mutually differing_ parts?**
+
+[.notes]
+--
+* You have to realize that there is a _data producing_ part in your code.
+* And _that's_ the part that you can isolate.
+--
 
 
-== Solution: Use a Fibonacci Number _Generator_
+== Isolate the Data Producing Part into a Generator
 
-FIXME: https://en.wikipedia.org/wiki/Generator_(computer_programming)
+[quote,"Python documentation, glossary","\"generator\" and \"generator iterator\" (excerpts)"]
+--
+[A generator is] a function which returns a _generator iterator_. It looks like a normal
+function except that it contains `yield` expressions for producing a
+series of values usable in a `for` loop or that can be retrieved one at a
+time with the `next()` function.
 
-For the speaker notes: What you have to realize, is that there is a _data producing_ part in your code. And that's the part that you can isolate.
+Each `yield` temporarily suspends processing, remembering the location execution state (including local variables and pending `try` statements). When the generator iterator resumes, it picks up where it left off (in contrast to functions which start fresh on every invocation).
+--
+
+== The Fibonacci Number Generator
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="7..12"]
+--
 
 
+[.notes]
+--
+* So this is how the Fibonacci Number Generator looks like
+* [shortly explain the code of `fib_gen()`]
+* What you see here, is in essence the "canonical" code representation of the Fibonacci sequence.
+--
+
+== Example usage of the Fibonacci generator
+
+Create a list of the first 10 Fibonacci numbers using `fib_gen`: +
+{nbsp}
+
+[source,pycon]
+--
+>>> [fib for _, fib in zip(range(10), fib_gen())]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+--
+{nbsp} +
+{nbsp} +
+
+Now the requested Fibonacci functions can be refactored, making use of the Fibonacci number generator.
+
+[.notes]
+--
+* Making the 5 Fibonacci functions (as was requested by the Product
+  Owner), making use of `fib_gen` has now become relatively easy.
+* But we can go even one step further ...
+* [next slide]
+--
+
+
+== Are We Set? Problem Solved?
+
+The next step: make use of the building blocks provided by:
+
+* `itertools`{empty}footnote:[https://docs.python.org/3/library/itertools.html] from the standard library, and
+* the `more-itertools`{empty}footnote:[https://more-itertools.readthedocs.io/] external package.
+
+[quote,"Python documentation, library","itertools"]
+The [`itertools`] module standardizes a core set of fast, memory efficient tools that are useful by themselves or in combination. Together, they form an “iterator algebra” making it possible to construct specialized tools succinctly and efficiently in pure Python.
+
+[.notes]
+--
+* ... because Python's standard library provides a wonderful module
+  delivering this functionality without needing to code any loop
+  constructs yourself, the `itertools` module [read out the quote]
+* what is called the "iterator algebra", is what I would call "a pipeline of iterators"
+* *`more-itertools` implements the recipes listed in the `itertools` documentation and provides additional building blocks*.
+--
+
+
+== Fibs Less Than N (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
+--
+{nbsp} +
+[.text-left]
+--
+``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+
+{empty}:: Make an iterator that returns elements from the iterable as long as the predicate is true.
+--
+
+[.notes]
+--
+* You use the `takewhile` "filter" to let pass all the elements until a the condition, coded in the lambda expression returns false.
+* Subsequently, you collect the resulting truncated Fibonacci sequence in a list.
+--
+
+
+== The First N Fibs (Python, Refactored)
+
+
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
+--
+{nbsp} +
+[.text-left]
+--
+``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+
+{empty}:: Make an iterator that returns elements from the iterable as long as the predicate is true.
+--
+
+[.notes]
+--
+* You use the `takewhile` "filter" to let pass all the elements until a the condition, coded in the lambda expression returns false.
+* Subsequently, you collect the resulting truncated Fibonacci sequence in a list.
+--
 
 == FIXME CURRENT END OF PRESENTATION
 

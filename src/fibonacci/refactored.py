@@ -14,7 +14,7 @@ def fib_gen() -> Iterator[int]:
 
 def fib_list_to(n: int) -> list[int]:
     """Return list of all Fibonacci numbers less than n."""
-    return list(itertools.takewhile(lambda value: value < n, fib_gen()))
+    return list(itertools.takewhile(lambda fib: fib < n, fib_gen()))
 
 
 def fib_ordinal(n: int) -> int:
@@ -36,15 +36,13 @@ def first_n_fibs(n: int) -> list[int]:
 def largest_fib_less_than(n: int) -> int:
     """Return largest Fibonacci number less than n."""
     try:
-        return more_itertools.last(
-            itertools.takewhile(lambda value: value < n, fib_gen())
-        )
+        return more_itertools.last(itertools.takewhile(lambda fib: fib < n, fib_gen()))
     except ValueError as e:
-        raise ValueError(f"n ({n!r}) should be a positive integer")
+        raise ValueError(f"n ({n!r}) should be a positive integer") from e
 
 
 def smallest_fib_greater_equal(n: int) -> int:
     """Return smallest Fibonacci greater than or equal to n."""
     return more_itertools.first(
-        itertools.dropwhile(lambda value: value < n, fib_gen()), None
+        itertools.dropwhile(lambda fib: fib < n, fib_gen()), None
     )

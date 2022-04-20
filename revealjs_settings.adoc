@@ -5,21 +5,28 @@
 </script>
 
 <style>
-/*.reveal pre {*/
 .listingblock {
-  /*width: 90%;*/
-  font-size: 120%;
-  max-height: 1000px;
+    /*width: 80%;*/
+    /*font-size: 135% !important;*/
+    max-height: 200% !important;
+    height: 200% !important;
+}
+
+
+.reveal blockquote {
+    width: 100% !important;
 }
 
 /*. {*/
 /*  width: 90%;*/
 /*}*/
 
-/*.reveal pre code {*/
-/*  max-height: 800px;*/
-/*  height: 100%;*/
-/*}*/
+.reveal pre code {
+  font-size: 150%;
+  line-height: 100%;
+  max-height: none;
+  height: 100%;
+}
 </style>
 
 

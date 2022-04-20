@@ -1,8 +1,11 @@
 import itertools
 from typing import cast
 
-
-def fib_list_or_ordinal(mode_is_list_to: bool, n: int) -> int | list[int]:
+# fmt: off
+def fib_list_or_ordinal(
+    mode_is_list_to: bool, n: int
+) -> int | list[int]:
+    """The first two functions combined."""
     if mode_is_list_to:
         result: list[int] = []
     a, b = 0, 1
@@ -13,6 +16,7 @@ def fib_list_or_ordinal(mode_is_list_to: bool, n: int) -> int | list[int]:
             result.append(a)
         a, b = b, a + b
     return result if mode_is_list_to else a
+# fmt: on
 
 
 def fib_list_to(n: int) -> list[int]:
