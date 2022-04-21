@@ -1,6 +1,7 @@
 import itertools
 from typing import cast
 
+
 # fmt: off
 def fib_list_or_ordinal(
     mode_is_list_to: bool, n: int

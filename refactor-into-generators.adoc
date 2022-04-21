@@ -169,7 +169,7 @@ include::{sourcedir}/tests/features/fib_ordinal.feature[lines="2.."]
 --
 
 
-== Python source for the N'th Fibonacci number
+== The N'th Fibonacci number (Python)
 
 [source,python]
 --
@@ -372,7 +372,7 @@ WARNING: Put on your Peril-Sensitive Sunglasses{empty}footnote:[https://hitchhik
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="5..18"]
+include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="6..19"]
 --
 
 [.notes]
@@ -497,26 +497,111 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
 --
 
 
-== The First N Fibs (Python, Refactored)
-
-
+== The N'th Fibonacci number (Python, Refactored)
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
+include::{sourcedir}/src/fibonacci/refactored.py[lines="20..25"]
 --
-{nbsp} +
+// {nbsp} +
 [.text-left]
 --
-``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+``itertools.``**`islice`**``(``__``iterable``__``, ``__``stop``__``)``: +
+``itertools.``**`islice`**``(``__``iterable``__``, ``__``start``__``, ``__``stop``__{startsb}``, ``__``step``__{endsb}``)``:
 
-{empty}:: Make an iterator that returns elements from the iterable as long as the predicate is true.
+{empty}:: Make an iterator that returns selected elements from the
+iterable, just like regular slicing,
+//{empty}--
+//``[``{startsb}{nbsp}__``start``__{nbsp}{endsb}``:``{nbsp}__``stop``__{nbsp}{startsb}``:``{nbsp}__``step``__{nbsp}{endsb}``]``
+//{empty}--
+but _without_ support for negative values for start, stop, or step.
+
+//``more_itertools.``**`one`**``(``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError)``:
+``more_itertools.``**`one`**``(``__``iterable``__{startsb}``, .{zwsp}..``{endsb}``)``:
+
+{empty}:: Return the first item from iterable, which is expected to contain only that item. Raise an exception if iterable is empty or has more than one item.
+
+
 --
 
 [.notes]
 --
-* You use the `takewhile` "filter" to let pass all the elements until a the condition, coded in the lambda expression returns false.
-* Subsequently, you collect the resulting truncated Fibonacci sequence in a list.
+* ``itertools``' **`islice`** selects elements from the iterable, like slicing
+  would do from a sequence.
+* And ``more_itertools``' **`one`** ensures that there is exactly one element
+  in the iterable, and returns that element. It accepts additional
+  keyword arguments to specify your own exceptions other than the
+  default `ValueError`
+* By the way, `more_itertools` provides an **`islice_extended`**,
+  supporting negative values for start, stop, and step.
+--
+
+
+== The First N Fibs (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="28..33"]
+--
+
+[.notes]
+--
+* In this case, you use ``itertools``' **`islice`** "filter" with only
+  the _stop_ parameter.
+* And you use the `list` constructor to collect the elements in a list.
+--
+
+
+== The Largest Fib Less Than N (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="36..43"]
+--
+// {nbsp} +
+[.text-left]
+--
+``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+
+{empty}:: Make an iterator that returns elements from the iterable as
+  long as the predicate is true.
+
+//``more_itertools.``**`one`**``(``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError)``:
+``more_itertools.``**`last`**``(``__``iterable``__{startsb}``, ``__``default``__{endsb}``)``:
+
+{empty}:: Return the last item of iterable, or default if iterable is empty.
+
+--
+
+[.notes]
+--
+* FIXME.
+--
+
+
+== The Smallest Fib Greater/Equal N (Python, Refactored)
+
+[source,python]
+--
+include::{sourcedir}/src/fibonacci/refactored.py[lines="46..50"]
+--
+// {nbsp} +
+[.text-left]
+--
+``itertools.``**`dropwhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
+
+{empty}:: Make an iterator that drops elements from the iterable as long as the predicate is true; afterwards, returns every element.
+
+//``more_itertools.``**`one`**``(``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError)``:
+``more_itertools.``**`first`**``(``__``iterable``__{startsb}``, ``__``default``__{endsb}``)``:
+
+{empty}:: Return the first item of iterable, or default if iterable is empty.
+
+--
+
+[.notes]
+--
+* FIXME
 --
 
 == FIXME CURRENT END OF PRESENTATION

@@ -36,7 +36,9 @@ def first_n_fibs(n: int) -> list[int]:
 def largest_fib_less_than(n: int) -> int:
     """Return largest Fibonacci number less than n."""
     try:
-        return more_itertools.last(itertools.takewhile(lambda fib: fib < n, fib_gen()))
+        return more_itertools.last(
+            itertools.takewhile(lambda fib_nbr: fib_nbr < n, fib_gen())
+        )
     except ValueError as e:
         raise ValueError(f"n ({n!r}) should be a positive integer") from e
 
