@@ -1,7 +1,7 @@
 import functools
 import importlib
 import types
-from typing import Any, Callable, cast
+from typing import Callable, cast
 
 import pytest
 from pytest_bdd import given, parsers, scenarios, then, when

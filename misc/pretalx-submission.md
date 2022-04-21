@@ -101,4 +101,4 @@ _Development & Software Engineering Practices_
 
 ## EuroPython tweet
 
-Have you ever found yourself variations of a loop construct without knowing how to cleanly factor out the common parts? This talk will show you a way out: refactor into generator functions!
+Have you ever found yourself coding variations of a loop construct without knowing how to cleanly factor out the common parts? This talk will show you a way out: refactor into generator functions!

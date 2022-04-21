@@ -45,14 +45,4 @@ $(FIB_MODULES):
 
 fixfmt: isort black
 
-# For building the slides
-SUBDIRS = docbuild docbuild-rjs
-
-.PHONY: all subdirs $(SUBDIRS) $(FIB_MODULES)
-
-subdirs: $(SUBDIRS)
-
-$(SUBDIRS):
-	[ -d $@ ] || mkdir -p $@
-	# $(MAKE) -C $@ -f ../Makefile.$@
-	$(MAKE) -C $@ -f ../Makefile.$@
+.PHONY: all test-all $(FIB_MODULES)

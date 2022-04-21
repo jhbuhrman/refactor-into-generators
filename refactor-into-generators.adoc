@@ -417,6 +417,30 @@ time with the `next()` function.
 Each `yield` temporarily suspends processing, remembering the location execution state (including local variables and pending `try` statements). When the generator iterator resumes, it picks up where it left off (in contrast to functions which start fresh on every invocation).
 --
 
+
+// FIXME: an excerpt from my ignite talk from some time ago:
+== Context Switch: Generator Functions
+What is a _generator function_?
+
+[role="incremental"]
+* A _generator function_, when called, returns a _generator iterator_,
+* This _iterator_ can subsequently be used in a `for` loop, for example.
+* Each time you requests an item from it, the generator
+[role="incremental"]
+** gives back the item,
+** saves it state, and
+** passes control back to the calling code.
+
+
+=== How does it work?
+
+[role="incremental"]
+* A _plain_ function becomes a _generator_ function when it contains one or more `yield` statements
+* In each iteration, the _generator_ runs until the `yield` statement
+* The value of the `yield` statement is returned back to the consumer
+* If there are no more `yield` statements to execute, the function runs until the end or a `return` statement, signalling the end
+
+
 == The Fibonacci Number Generator
 
 [source,python]
