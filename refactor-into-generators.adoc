@@ -94,14 +94,6 @@ Starting from 0 and 1, the next few values in the sequence are:
 --
 
 
-
-== First N Fibonacci Numbers in Gherkin
-
-[source,gherkin]
---
-include::{sourcedir}/tests/features/fib_list_to.feature[lines="2.."]
---
-
 // FIXME FIXME: perhaps the persona should be "Fibonaccista" ?
 
 // FIXME - add a new slide here? (prevent information overflow?)
@@ -171,14 +163,6 @@ ____________________________________________________________________
 --
 
 
-=== Add Gherkin for the N'th Fibonacci number
-
-[source,gherkin]
---
-include::{sourcedir}/tests/features/fib_ordinal.feature[lines="2.."]
---
-
-
 == The N'th Fibonacci number (Python)
 
 [source,python]
@@ -204,14 +188,6 @@ Now that we've got functions for ...
 --
 
 
-=== The First N Fibs (Gherkin)
-
-[soure,gherkin]
-----
-include::{sourcedir}/tests/features/first_n_fibs.feature[]
-----
-
-
 == The First N Fibs (Python)
 
 [source,python]
@@ -220,27 +196,11 @@ include::{sourcedir}/src/fibonacci/before.py[lines="19..26"]
 --
 
 
-=== Largest Fib Less Than N (Gherkin)
-
-[soure,gherkin]
---
-include::{sourcedir}/tests/features/largest_fib_less_than.feature[]
---
-
-
 == The Largest Fib Less Than N (Python)
 
 [source,python]
 --
 include::{sourcedir}/src/fibonacci/before.py[lines="29..34"]
---
-
-
-=== Smallest Fib Greater/Equal N (Gherkin)
-
-[soure,gherkin]
---
-include::{sourcedir}/tests/features/smallest_fib_greater_equal.feature[]
 --
 
 
