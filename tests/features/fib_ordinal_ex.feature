@@ -1,3 +1,6 @@
+# Please note: the argument checks have been removed from the
+# implementation; these Features are not tested anymore.
+
 @first_two
 Feature: More Fibonacci's
 

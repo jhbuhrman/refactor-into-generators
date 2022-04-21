@@ -1,7 +1,7 @@
 = When To Refactor Into Generators And How
 :author:    Jan-Hein Bührman
 :email:     {lt}jan-hein.buhrman@ordina.nl{gt}
-// :backend:   slidy
+//:backend:   slidy
 //:backend: revealjs
 //:stem:
 :max-width: 80em
@@ -69,6 +69,16 @@ by refactoring them into an elegant pipeline of generators.
 * Suppose your Product Owner requires a function that returns a list of
   all Fibonacci number less than _n_
 * Who knows what a Fibonacci number is? ✋
+
+[.notes]
+--
+FIXME:
+The League of Fibonacci lovers
+-- or --
+The Society of Fibonacci Lovers
+-- or --
+The Fibonacci fanclub
+--
 
 == Fibonacci Number (definition)
 
@@ -173,7 +183,7 @@ include::{sourcedir}/tests/features/fib_ordinal.feature[lines="2.."]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/before.py[lines="11..18"]
+include::{sourcedir}/src/fibonacci/before.py[lines="11..16"]
 --
 
 
@@ -206,7 +216,7 @@ include::{sourcedir}/tests/features/first_n_fibs.feature[]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/before.py[lines="21..30"]
+include::{sourcedir}/src/fibonacci/before.py[lines="19..26"]
 --
 
 
@@ -222,7 +232,7 @@ include::{sourcedir}/tests/features/largest_fib_less_than.feature[]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/before.py[lines="33..40"]
+include::{sourcedir}/src/fibonacci/before.py[lines="29..34"]
 --
 
 
@@ -238,7 +248,7 @@ include::{sourcedir}/tests/features/smallest_fib_greater_equal.feature[]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/before.py[lines="43..48"]
+include::{sourcedir}/src/fibonacci/before.py[lines="37..42"]
 --
 
 
@@ -525,7 +535,7 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/refactored.py[lines="20..25"]
+include::{sourcedir}/src/fibonacci/refactored.py[lines="20..22"]
 --
 // {nbsp} +
 [.text-left]
@@ -565,7 +575,7 @@ but _without_ support for negative values for start, stop, or step.
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/refactored.py[lines="28..33"]
+include::{sourcedir}/src/fibonacci/refactored.py[lines="25..27"]
 --
 
 [.notes]
@@ -580,7 +590,7 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="28..33"]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/refactored.py[lines="36..43"]
+include::{sourcedir}/src/fibonacci/refactored.py[lines="30..34"]
 --
 // {nbsp} +
 [.text-left]
@@ -607,7 +617,7 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="36..43"]
 
 [source,python]
 --
-include::{sourcedir}/src/fibonacci/refactored.py[lines="46..50"]
+include::{sourcedir}/src/fibonacci/refactored.py[lines="37..41"]
 --
 // {nbsp} +
 [.text-left]

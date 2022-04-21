@@ -19,28 +19,19 @@ def fib_list_to(n: int) -> list[int]:
 
 def fib_ordinal(n: int) -> int:
     """Return the n'th Fibonacci number, counting from 0."""
-    try:
-        return more_itertools.one(itertools.islice(fib_gen(), n, n + 1))
-    except ValueError as e:
-        raise ValueError(f"n ({n!r}) should be a non-negative integer") from e
+    return more_itertools.one(itertools.islice(fib_gen(), n, n + 1))
 
 
 def first_n_fibs(n: int) -> list[int]:
     """Return the first n Fibonacci numbers."""
-    try:
-        return list(itertools.islice(fib_gen(), n))
-    except ValueError as e:
-        raise ValueError(f"n ({n!r}) should be a non-negative integer") from e
+    return list(itertools.islice(fib_gen(), n))
 
 
 def largest_fib_less_than(n: int) -> int:
     """Return largest Fibonacci number less than n."""
-    try:
-        return more_itertools.last(
-            itertools.takewhile(lambda fib_nbr: fib_nbr < n, fib_gen())
-        )
-    except ValueError as e:
-        raise ValueError(f"n ({n!r}) should be a positive integer") from e
+    return more_itertools.last(
+        itertools.takewhile(lambda fib_nbr: fib_nbr < n, fib_gen())
+    )
 
 
 def smallest_fib_greater_equal(n: int) -> int:

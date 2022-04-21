@@ -11,8 +11,9 @@ from pytest_bdd import given, parsers, scenarios, then, when
 scenarios(
     "features/fib_list_to.feature",
     "features/fib_ordinal.feature",
-    "features/fib_ordinal_ex.feature",
-    "features/fib_other_ex.feature",
+    # Testing the checks on valid arguments have been removed.
+    # "features/fib_ordinal_ex.feature",
+    # "features/fib_other_ex.feature",
     "features/first_n_fibs.feature",
     "features/largest_fib_less_than.feature",
     "features/smallest_fib_greater_equal.feature",
