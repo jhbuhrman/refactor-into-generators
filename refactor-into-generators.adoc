@@ -182,8 +182,7 @@ Now that we've got functions for ...
 +
 ..., can you also make functions that return ...
 +
-* the first N Fibonacci numbers,
-* the largest Fibonacci number less than N, and
+* the first N Fibonacci numbers, and
 * the smallest Fibonacci number greater than or equal to N?
 --
 
@@ -193,14 +192,6 @@ Now that we've got functions for ...
 [source,python]
 --
 include::{sourcedir}/src/fibonacci/before.py[lines="19..26"]
---
-
-
-== The Largest Fib Less Than N (Python)
-
-[source,python]
---
-include::{sourcedir}/src/fibonacci/before.py[lines="29..34"]
 --
 
 
@@ -222,25 +213,24 @@ include::{sourcedir}/src/fibonacci/before.py[lines="37..42"]
 //----
 
 
-== All (shortened) function bodies next to each other
+== All (shortened) functions next to each other
 
 [cols=2*]
 |===
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="25..30"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="24..30"]
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="43..48"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="42..48"]
 
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="35..38"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="34..38"]
 a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="53..56"]
-
-|Do you see a pattern? ✋
-a|[source,python]
-include::{sourcedir}/src/fibonacci/before_compressed.py[lines="60..63"]
+include::{sourcedir}/src/fibonacci/before_compressed.py[lines="59..63"]
 |===
 
+{nbsp} +
+{nbsp} +
+Do you see a pattern? ✋
 
 [.notes]
 --
@@ -250,9 +240,6 @@ include::{sourcedir}/src/fibonacci/before_compressed.py[lines="60..63"]
 |first_n_fibs
 
 |fib_ordinal
-|largest_fib_less_than
-
-|{empty}
 |smallest_fib_greater_equal
 
 |===
@@ -510,8 +497,10 @@ iterable, just like regular slicing,
 //{empty}--
 but _without_ support for negative values for start, stop, or step.
 
-//``more_itertools.``**`one`**``(``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError)``:
-``more_itertools.``**`one`**``(``__``iterable``__{startsb}``, .{zwsp}..``{endsb}``)``:
+``more_itertools.``**`one`**``( +
+{nbsp}{nbsp}{nbsp}{nbsp}``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError`` +
+``)``:
+//``more_itertools.``**`one`**``(``__``iterable``__{startsb}``, .{zwsp}..``{endsb}``)``:
 
 {empty}:: Return the first item from iterable, which is expected to contain only that item. Raise an exception if iterable is empty or has more than one item.
 
@@ -520,12 +509,13 @@ but _without_ support for negative values for start, stop, or step.
 
 [.notes]
 --
-* ``itertools``' **`islice`** selects elements from the iterable, like slicing
-  would do from a sequence.
-* And ``more_itertools``' **`one`** ensures that there is exactly one element
-  in the iterable, and returns that element. It accepts additional
-  keyword arguments to specify your own exceptions other than the
-  default `ValueError`
+* ``itertools``' **`islice`** selects elements from the iterable, like
+  slicing would do from a sequence. Either you specify only the stop
+  value, or you can specify start, stop, and optionally the step value
+* And ``more_itertools``' **`one`** ensures that there is exactly one
+  element in the iterable, and returns that element. It accepts
+  additional keyword arguments to specify your own exceptions other than
+  the default `ValueError`
 * By the way, `more_itertools` provides an **`islice_extended`**,
   supporting negative values for start, stop, and step.
 --
@@ -540,36 +530,9 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="25..27"]
 
 [.notes]
 --
-* In this case, you use ``itertools``' **`islice`** "filter" with only
-  the _stop_ parameter.
+* In this case, you use the ``itertools``' **`islice`** "filter
+  function" with only the _stop_ parameter.
 * And you use the `list` constructor to collect the elements in a list.
---
-
-
-== The Largest Fib Less Than N (Python, Refactored)
-
-[source,python]
---
-include::{sourcedir}/src/fibonacci/refactored.py[lines="30..34"]
---
-// {nbsp} +
-[.text-left]
---
-``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
-
-{empty}:: Make an iterator that returns elements from the iterable as
-  long as the predicate is true.
-
-//``more_itertools.``**`one`**``(``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError)``:
-``more_itertools.``**`last`**``(``__``iterable``__{startsb}``, ``__``default``__{endsb}``)``:
-
-{empty}:: Return the last item of iterable, or default if iterable is empty.
-
---
-
-[.notes]
---
-* FIXME.
 --
 
 
@@ -586,7 +549,6 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="37..41"]
 
 {empty}:: Make an iterator that drops elements from the iterable as long as the predicate is true; afterwards, returns every element.
 
-//``more_itertools.``**`one`**``(``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError)``:
 ``more_itertools.``**`first`**``(``__``iterable``__{startsb}``, ``__``default``__{endsb}``)``:
 
 {empty}:: Return the first item of iterable, or default if iterable is empty.

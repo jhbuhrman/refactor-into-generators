@@ -21,8 +21,8 @@ def _check_positive(f):
     return check_and_do
 
 
-def fib_list_to(n: int) -> list[int]:
-    result: list[int] = []
+def fib_list_to(n):
+    result = []
     a, b = 0, 1
     while a < n:
         result.append(a)
@@ -31,7 +31,7 @@ def fib_list_to(n: int) -> list[int]:
 
 
 @_check_nonnegative
-def fib_ordinal(n: int) -> int:
+def fib_ordinal(n):
     a, b = 0, 1
     for _ in range(n):
         a, b = b, a + b
@@ -39,8 +39,8 @@ def fib_ordinal(n: int) -> int:
 
 
 @_check_nonnegative
-def first_n_fibs(n: int) -> list[int]:
-    result: list[int] = []
+def first_n_fibs(n):
+    result = []
     a, b = 0, 1
     for _ in range(n):
         result.append(a)
@@ -49,14 +49,14 @@ def first_n_fibs(n: int) -> list[int]:
 
 
 @_check_positive
-def largest_fib_less_than(n: int) -> int:
+def largest_fib_less_than(n):
     a, b = 0, 1
     while b < n:
         a, b = b, a + b
     return a
 
 
-def smallest_fib_greater_equal(n: int) -> int:
+def smallest_fib_greater_equal(n):
     a, b = 0, 1
     while a < n:
         a, b = b, a + b
