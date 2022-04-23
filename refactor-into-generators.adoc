@@ -17,6 +17,7 @@
 // 25 mins
 :revealjs_totalTime: 1500
 :revealjs_controlsTutorial: false
+:revealjs_slideNumber: true
 :revealjs_hash: true
 :source-highlighter: highlightjs
 :highlightjs-languages: gherkin,pycon
@@ -32,14 +33,12 @@ include::revealjs_settings.adoc[]
 
 After this presentation, you will ...
 
-// [role="incremental"]
-
 * be able to _recognize_ certain loop constructs as candidate for
   refactoring,
 * know _how_ to convert these constructs into more maintainable
   _Pythonic_ code,
 +
-by refactoring them into an elegant pipeline of generators.
+by refactoring them into an elegant pipelines of generators.
 * be more acquainted with the standard library `itertools` module and
   the `more-itertools` package
 
@@ -229,7 +228,6 @@ include::{sourcedir}/src/fibonacci/before_compressed.py[lines="59..63"]
 |===
 
 {nbsp} +
-{nbsp} +
 Do you see a pattern? ✋
 
 [.notes]
@@ -323,9 +321,7 @@ Perhaps combine the requested functions ("mode" flags or an enum) ❓
 
 == Experiment: Combine The First Two Functions
 
-
 WARNING: Put on your Peril-Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
-
 
 [source,python]
 --
@@ -410,27 +406,37 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="7..12"]
 --
 * So this is how the Fibonacci Number Generator looks like
 * [shortly explain the code of `fib_gen()`]
-* What you see here, is in essence the "canonical" code representation of the Fibonacci sequence.
+* What you see here, is in essence the "canonical" code representation
+  of the Fibonacci sequence.
 --
 
 == Example usage of the Fibonacci generator
 
-Create a list of the first 10 Fibonacci numbers using `fib_gen`: +
-{nbsp}
+Print the first 8 Fibonacci numbers using `fib_gen()`:
 
 [source,pycon]
 --
->>> [fib for _, fib in zip(range(10), fib_gen())]
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+>>> for _, fib in zip(range(10), fib_gen()):
+...     print(f"{fib:2d}")
+...
+ 0
+ 1
+ 1
+ 2
+ 3
+ 5
+ 8
+13
 --
-{nbsp} +
 {nbsp} +
 
 Now the requested Fibonacci functions can be refactored, making use of the Fibonacci number generator.
 
 [.notes]
 --
-* Making the 5 Fibonacci functions (as was requested by the Product
+* Explain that `zip()` stops as soon as one of the iterators is
+  exhausted.
+* Making the 4 Fibonacci functions (as was requested by the Product
   Owner), making use of `fib_gen` has now become relatively easy.
 * But we can go even one step further ...
 * [next slide]
@@ -449,7 +455,7 @@ The [`itertools`] module standardizes a core set of fast, memory efficient tools
 
 [.notes]
 --
-* ... because Python's standard library provides a wonderful module
+* ... because Python's standard library provides a wonderful module,
   delivering this functionality without needing to code any loop
   constructs yourself, the `itertools` module [read out the quote]
 * what is called the "iterator algebra", is what I would call "a pipeline of iterators"
@@ -473,7 +479,11 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
 
 [.notes]
 --
-* You use the `takewhile` "filter" to let pass all the elements until a the condition, coded in the lambda expression returns false.
+// FIXME TODO: perhaps let the explanation appear first, followed by the actual code?
+* [First explain `takewhile`]: The `takewhile` "filter" fetches the elements one by one, calls the
+  predicate function with fetched element as the single parameter, and
+  passes through each element as long as the predicate returns a truthy
+  value, and stops otherwise.
 * Subsequently, you collect the resulting truncated Fibonacci sequence in a list.
 --
 
@@ -492,15 +502,11 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="20..22"]
 
 {empty}:: Make an iterator that returns selected elements from the
 iterable, just like regular slicing,
-//{empty}--
-//``[``{startsb}{nbsp}__``start``__{nbsp}{endsb}``:``{nbsp}__``stop``__{nbsp}{startsb}``:``{nbsp}__``step``__{nbsp}{endsb}``]``
-//{empty}--
 but _without_ support for negative values for start, stop, or step.
 
 ``more_itertools.``**`one`**``( +
 {nbsp}{nbsp}{nbsp}{nbsp}``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError`` +
 ``)``:
-//``more_itertools.``**`one`**``(``__``iterable``__{startsb}``, .{zwsp}..``{endsb}``)``:
 
 {empty}:: Return the first item from iterable, which is expected to contain only that item. Raise an exception if iterable is empty or has more than one item.
 

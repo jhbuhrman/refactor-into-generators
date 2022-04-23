@@ -23,7 +23,7 @@
 
 .reveal pre code {
   font-size: 150%;
-  line-height: 100%;
+  line-height: 117%;
   max-height: none;
   height: 100%;
 }
