@@ -8,31 +8,11 @@ Here are some notes to self.
 - some RevealJS adaptions are in `rjs_settings.adoc`
 - I'm using `asciidoc` (via `brew`) with the revealjs backend, as per
   https://docs.asciidoctor.org/reveal.js-converter/latest/setup/node-js-setup/ 
-- The `Makefile.docbuild-rjs` is defunct - the current setup doesn't like
-  the generated `.html` be installed in a subdirectory
 - I have a asciidoc plugin installed in PyCharm
 - use `bash scripts/docbuild-rjs.sh refactor-into-generators.adoc refactor-into-generators.html`
   to build the resulting slide deck
 - I have configured a PyCharm "File Watcher" triggering this command automatically on file save
-
-### Slide technologies:
-
-- [AsciiDoc with slidy backend](https://asciidoc-py.github.io/slidy.html), see also following additional resources:
-  - [AsciiDoc User Guide](https://asciidoc-py.github.io/userguide.html) 
-  - [AsciiDoc Language Documentation](https://docs.asciidoctor.org/asciidoc/latest/)
-  - [AsciiDoc Writer's Guide](https://asciidoctor.org/docs/asciidoc-writers-guide/)
-- [reStructuredText to reveal.js](https://github.com/LLNL/rst2slides) could be a great alternative!
-  - See also [reveal.js](https://github.com/hakimel/reveal.js/)
-  - But only **after** you're have finished your slides in AsciiDoc
-  - Node / JavaScript setup: https://docs.asciidoctor.org/reveal.js-converter/latest/setup/node-js-setup/
-  - Config: https://docs.asciidoctor.org/reveal.js-converter/latest/converter/revealjs-options/
-  - For PDFs of your slides, including Notes, see
-    https://github.com/hakimel/reveal.js/blob/v3.9/README.md#pdf-export
-  - A good example(?): https://github.com/schauder/spring-data-reactive-talk 
-  - https://revealjs.com/presentation-size/
-  - https://github.com/schauder/spring-data-reactive-talk/blob/master/src/main/sass/schauderhaft.scss
-  - 
-    
+ 
 ### Good presentations
 - Check out https://ep2019.europython.eu/events/tips/index.html
 - Look once more carefully to [Brandon Rhodes' PyCon 2014 Talk](https://www.youtube.com/watch?v=fYlnfvKVDoM&t=331s&ab_channel=PyCon2014)

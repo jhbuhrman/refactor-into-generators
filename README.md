@@ -1,1 +1,3 @@
-FIXME: README to be provided
+**README to be provided**
+
+`NOTES.md` contains some unstructered hints

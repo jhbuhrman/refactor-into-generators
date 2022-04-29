@@ -22,6 +22,8 @@ ${ASCIIDOC} ${ASCIIDOC_FLAGS} -o "${target}.tmp" "${source}" 2>"${asciidoc_err}"
 ${CAT} "${asciidoc_err}" >&2
 [ -s "${asciidoc_err}" -a ${exitcode} -eq 0 ] && exitcode=2
 ${RM} "${asciidoc_err}"
-[ ${exitcode} -eq 0 ] && ${MV} "${target}.tmp" "${target}" || ${RM} "${target}.tmp" "${target}"
+[ ${exitcode} -eq 0 ] \
+    && { echo -E ${MV} "${target}.tmp" "${target}" >&2; ${MV} "${target}.tmp" "${target}"; } \
+    || { echo -E ${RM} "${target}.tmp" "${target}" >&2; ${RM} "${target}.tmp" "${target}"; }
 [ ${exitcode} -eq 0 ] || echo -E "*** error code ${exitcode}" >&2
 (exit ${exitcode})
