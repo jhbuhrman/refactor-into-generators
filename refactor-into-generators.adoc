@@ -466,12 +466,12 @@ The [`itertools`] module standardizes a core set of fast, memory efficient tools
 
 == Fibs Less Than N (Python, Refactored)
 
-[source,python]
+[source,python,step=2]
 --
 include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
 --
 {nbsp} +
-[.text-left]
+[.text-left,step=1]
 --
 ``itertools.``**`takewhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
 
@@ -492,11 +492,11 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="15..17"]
 
 == The N'th Fibonacci number (Python, Refactored)
 
-[source,python]
+[source,python,step=3]
 --
 include::{sourcedir}/src/fibonacci/refactored.py[lines="20..22"]
 --
-[.text-left]
+[.text-left,step=1]
 --
 ``itertools.``**`islice`**``(``__``iterable``__``, ``__``stop``__``)``: +
 ``itertools.``**`islice`**``(``__``iterable``__``, ``__``start``__``, ``__``stop``__{startsb}``, ``__``step``__{endsb}``)``:
@@ -504,7 +504,9 @@ include::{sourcedir}/src/fibonacci/refactored.py[lines="20..22"]
 {empty}:: Make an iterator that returns selected elements from the
 iterable, just like regular slicing,
 but _without_ support for negative values for start, stop, or step.
-
+--
+[.text-left,step=2]
+--
 ``more_itertools.``**`one`**``( +
 {nbsp}{nbsp}{nbsp}{nbsp}``__``iterable``__``, ``__``too_short``__``=ValueError, ``__``too_long``__``=ValueError`` +
 ``)``:
@@ -527,12 +529,12 @@ but _without_ support for negative values for start, stop, or step.
 
 == The First N Fibs (Python, Refactored)
 
-[source,python]
+[source,python,step=2]
 --
 include::{sourcedir}/src/fibonacci/refactored.py[lines="25..27"]
 --
 {empty} +
-[.text-left]
+[.text-left,step=1]
 Now making use of the ``itertools.``**`islice`**``(``__``iterable``__``, ``__``stop``__``)`` variant, +
 only providing the __``stop``__ argument
 
@@ -548,21 +550,22 @@ only providing the __``stop``__ argument
 
 == The Smallest Fib Greater/Equal N (Python, Refactored)
 
-[source,python]
+[source,python,step=3]
 --
 include::{sourcedir}/src/fibonacci/refactored.py[lines="37..41"]
 --
 // {nbsp} +
-[.text-left]
+[.text-left,step=1]
 --
 ``itertools.``**`dropwhile`**``(``__``predicate``__``, ``__``iterable``__``)``:
 
 {empty}:: Make an iterator that drops elements from the iterable as long as the predicate is true; afterwards, returns every element.
-
+--
+[.text-left,step=2]
+--
 ``more_itertools.``**`first`**``(``__``iterable``__{startsb}``, ``__``default``__{endsb}``)``:
 
 {empty}:: Return the first item of iterable, or a default if iterable is empty.
-
 --
 
 [.notes]
