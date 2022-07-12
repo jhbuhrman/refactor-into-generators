@@ -116,11 +116,11 @@ In this presentation...
 * I will introduce you to a family of similar functions,
   * involving loops,
   * containing fragments of similar code
-* And I will show you how to you can identify distinct responsibilities
+* And I will show you how you can identify distinct responsibilities
   within seemingly entangled code
 * I will touch upon the topic of _Generator Functions_
 * How these Generator Functions will enable you to Refactor this
-  emtangled code into separate functions
+  entangled code into separate functions
 * And finally I will introduce you to the utility generators and
   functions from the `itertools` module and the `more_itertools` package
 --
@@ -203,15 +203,15 @@ A bit of Googling might bring you to Python's own documentation site,
 ** You can see the variables `a` and `b` as _Fibonacci Registers_
 ** Register `a` holds the "current" Fibonacci number, and register `b`
    holds the "next" Fibonacci number
-* You execute the loop body, as long as the "current" Fibonacci
-  number is less than the provided threshold values
+* You keep executing the loop body, as long as the "current" Fibonacci
+  number is less than the provided threshold value
 * Within the loop, you append the "current" Fibonacci number to the result
   list
 * Next, you calculate the new values of the "current"
   and "next" Fibonacci numbers in one go, using Python's elegant feature
   named _sequence unpacking_. So the _new current_ Fibonacci number
   becomes the _old next_ Fibonacci number, and the _new next_ Fibonacci
-  number, is the sum of the old two numbers.
+  number, is the sum of the _old two numbers_.
 * Finally, you return the result list
 --
 
@@ -253,9 +253,9 @@ include::{sourcedir}/src/fibonacci/before.py[lines="11..16"]
 * As you can see, the code is similar to the previous function, but
   there are also differences: ...
 * There is no list initialization; the function returns just one value
-* You use the `range()` function to go the requested number of times
-  through the loop body, but you don't need the counter value itself
-* And within the loop body the new pair of Fibonacci numbers is
+* You use the `range()` function to execute the requested number of
+  times the loop body, but you don't need the counter value itself
+* And within the loop body, the new pair of Fibonacci numbers is
   calculated again.
 * After the loop finishes, you return the "then current" Fibonacci
   number
@@ -370,7 +370,7 @@ The pattern: ...
   end-condition.
 * Within the loop-body, sometimes the "current" value is added to the
   container, and
-* the new Fibonacci registers are calculated.
+* the new values of the two Fibonacci registers are calculated.
 * Finally, the "current" Fibonacci value, _or_ the built-up container
   is returned.
 
@@ -439,7 +439,7 @@ Code Refactoring +
 * So it seems _impossible_ to factor those common parts out and put them
   in a separate, distinct function
 * The code is mixed up with control flow constructs, `while` loop or
-  `for` loops
+  `for` loop
 * ... ¿_Maybe_ you could try to _combine_ the functions all in one golden
   "super" function?
 * Let's start with trying the first two requested features, and we will
@@ -466,9 +466,11 @@ include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="6..19"]
 
 * As you can see, it starts already with the ugly return type
   annotation, and as the author of `Black`, Łukasz Langa, told us in his
-  excellent PyCon{nbsp}US keynote talk: "__ugly type annotations are an
+  excellent PyCon{nbsp}US keynote: "__ugly type annotations are an
   indication of ugly code__"
-* So don't take this contrived example too seriously; it merely demonstrates that the resulting code is _not_ quite _maintainable_ and this isn't the way to go...
+* You should not take this contrived example too seriously; it merely
+  demonstrates that the resulting code is _not_ quite _maintainable_ and
+  this isn't the way to go...
 --
 
 
@@ -494,10 +496,10 @@ include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="6..19"]
   code, ... the code that is calculating and providing the Fibonacci
   numbers
 * And a _data consuming_ part, ... the code that
-  _either_ stores these values in a container, _or_ is checking some
+  _either_ collect these values in a container, _or_ is checking some
   condition that identifies the moment to return the "current"
   Fibonacci number.
-* The _data producing_  the part that you can isolate.
+* The _data producing_ part is the part that you can isolate.
 --
 
 
@@ -584,7 +586,7 @@ StopIteration
 --
 {empty}[click to show definition]
 
-* You see here an example of an basic generator function, mimicing
+* You see here an example of a basic generator function, mimicing
   the behavior of the `range()` function with an argument of `2`
 * When called, it produces a _generator iterator_, that implements
   the _iterator_ protocol
@@ -816,6 +818,14 @@ _Just an Example:_
   module and the `more_itertools` package. It might probably save you
   some work if you have a good idea about the functionality it offers.
 * It often makes your code more _expressive_ as well
+
+{blank}
+
+* There is a lot more to discover from these utilities. A final example
+  is the `chunked()` or `ichunked()` function, that partitions your
+  generated data into chunks; this can be convenient for loading large
+  amounts of data into a database, for example, keeping the bulk uploads
+  into manageable amounts.
 --
 
 
