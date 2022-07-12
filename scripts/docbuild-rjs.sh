@@ -5,6 +5,9 @@
 
 set -e
 
+echo -E date >&2
+date
+
 source="${1?}"
 target="${2?}"
 

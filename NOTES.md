@@ -8,7 +8,7 @@ Here are some notes to self.
 - some RevealJS adaptions are in `rjs_settings.adoc`
 - I'm using `asciidoc` (via `brew`) with the revealjs backend, as per
   https://docs.asciidoctor.org/reveal.js-converter/latest/setup/node-js-setup/ 
-- I have a asciidoc plugin installed in PyCharm
+- I have an asciidoc plugin installed in PyCharm
 - use `bash scripts/docbuild-rjs.sh refactor-into-generators.adoc refactor-into-generators.html`
   to build the resulting slide deck
 - I have configured a PyCharm "File Watcher" triggering this command automatically on file save

@@ -20,7 +20,7 @@
 :revealjs_slideNumber: true
 :revealjs_hash: true
 :source-highlighter: highlightjs
-:highlightjs-languages: gherkin,pycon
+:highlightjs-languages: gherkin, pycon
 :hide-uri-scheme:
 //:source-highlighter: pygments
 //:highlightjs-theme: a11y-light
@@ -50,59 +50,79 @@ by refactoring them into elegant pipelines of generators.
 * be more acquainted with the standard library `itertools` module and
   the `more-itertools` package
 
+[.notes]
+--
+* So what are the goals of this presentation?
+* Well, after this presentation you will be able to recognize certain
+  loop constructs as candidate for refactoring
+* You will know _how_ to refactor these constructs into more
+  maintainable, elegant, Pythonic code
+* And you will have had your first acquaintance with the standard
+  library's `itertools` module and the wonderful `more-itertools`
+  package
+--
 
 == Hello! 🙂
 
 Jan-Hein Bührman `{lt}jan-hein.buhrman@ordina.nl{gt}`
-
+{empty} +
 https://twitter.com/janheinb[`@janheinb`]
 {empty} +
-{empty} +
 
-* Witnessed Python's first baby steps
-* Various management and developer roles
+* https://realpython.com/java-vs-python/[_Java vs Python: Basic Python for Java Developers_] on https://realpython.com/java-vs-python[Real Python]
+* Witnessed Python's first baby steps very close at https://cwi.nl
+* Various developer, management, and developer roles
 * (Co-)Founder of _Ordina Pythoneers_,
-** https://www.ordina.nl[`ordina.nl`]'s
-  practice dedicated to Python
+** Practice within https://ordina.nl{empty}, dedicated to Python
 ** Participating Sponsor of the PSF
 * Nowadays a happy Python developer™️
 
 [.notes]
 --
-* But first, let me introduce myself: My name is Jan-Hein Bührman; you see my work email address and my twitter handle on the slide
-* I am working for Ordina, a BeNeLux based IT service provider for more than 10 years already; time flies when you're having fun
-* I witnessed the first baby steps of Python more than 30 years ago, when I was
-  working as a programmer for the Dutch national research institute for mathematics and computer science
-* While working mainly as a C/C++ developer, I always kept an eye on Python's developments
-* While being a Java unit manager, I sparked the idea for starting up a dedicated Python Practice; it is quite special for a "broad-spectrum" IT service provider company to have a Practice like ours
-* And the Ordina Pythoneers are Participating Sponsor of the PSF
-* The last four years I am a happy Python coder
+* But first, let me introduce myself: My name is Jan-Hein Bührman
+* Author of the _Basic Python for Java Developers_ tutorial on
+  _Real Python_
+* I witnessed the first baby steps of Python very close more than 30
+  years ago, when I was working as a programmer for the Dutch national
+  research institute for mathematics and computer science
+* While I was working mainly as a C and C++ developer, I always kept an
+  eye on Python's developments and occasionally used it
+* My employer is Ordina, a Benelux based IT service provider
+** When I was a Java unit manager, I came up with the idea of starting
+    a special Python practice;
+** This practice focuses on Python and software artisanship
+** I think it is quite special to a have a dedicated Python practice
+    within a "wide-spectrum" IT service provider company
+** The Ordina Pythoneers are Participating Sponsor of the PSF
+* The last couple of years, I do what I like most: Python programming!
 --
 
 == Topics
 
 // [role="incremental"]
 
-* Loops ...
-** similar code
-** varying start/stop/selection criteria
-* Refactoring
-* Patterns of loop constructs &larr; refactoring
-  candidates
-* Generators
-* `itertools` and `more_itertools`
+* Family of similar functions
+** involving loops
+** containing fragments of similar code
+* Recognition of patterns of loop constructs &larr; refactoring
+* Generators Functions
+* `itertools` (module) and `more_itertools` (package)
 
 
 [.notes]
 --
-* Loops with similar code but with varying start/stop/selection
-  criteria
-* Touch upon the topic of "Refactoring"
-* How to recognize some "patterns" of loop constructs as refactoring
-  candidates
-* Touch upon "Generators" and what they can bring us
-* And an introduction to the utility generators and functions from the `itertools` module
-  and the `more_itertools` package
+In this presentation...
+
+* I will introduce you to a family of similar functions,
+  * involving loops,
+  * containing fragments of similar code
+* And I will show you how to you can identify distinct responsibilities
+  within seemingly entangled code
+* I will touch upon the topic of _Generator Functions_
+* How these Generator Functions will enable you to Refactor this
+  emtangled code into separate functions
+* And finally I will introduce you to the utility generators and
+  functions from the `itertools` module and the `more_itertools` package
 --
 
 
@@ -116,11 +136,13 @@ https://twitter.com/janheinb[`@janheinb`]
 
 [.notes]
 --
-* (This is a fictional story)
-* The Product Owner, representing the _Fibonacci Sequence Fan Club_,
-  would like you to make a function returning a list of all Fibonacci
-  Numbers less than a certain value
-* ✋ So who knows what a Fibonacci number is?
+* So I'm going to tell you a fictional story, not a true story, about a
+  Python team that will develop functionality for a Product Owner
+* And this Product Owner is representing the _Fibonacci Sequence Fan
+  Club_
+* And the PO would like you to make a function returning a list of all
+  Fibonacci Numbers less than a certain value (_N_)
+* ✋ So, first of all, who knows what a Fibonacci number is?
 --
 
 == Fibonacci Number (definition)
@@ -140,6 +162,27 @@ Starting from 0 and 1, the next few values in the sequence are:
 {empty}:: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
 --
 
+[.notes]
+--
+The definition from Wikipedia states:
+
+* In mathematics, the **Fibonacci numbers** [...] form a _sequence_, the
+  **Fibonacci sequence**, in which each number is the sum of the two
+  _preceding_ ones
+* So this is the _essence_, you start with two numbers, usually _zero_
+  and _one_,
+* and the next value is simply the addition of the previous two...
+* So in this example, _zero_ is the first Fibonacci number, _one_ the
+  second Fibonacci number, and the _next_ one, the third, is the sum of
+  the _previous_ two numbers, _zero_ and _one_;
+* zero plus one makes one, so _one_ is the third value of the sequence.
+* The _next_ value is the sum of _one_ and _one_, which is _two_, and
+* The subsequent value is the sum of _one_ and _two_, making _three_,
+* Two plus three makes five; three plus five makes eight, and so on, and so on... and that's how the sequence is being built up
+
+So let's implement that in Python.
+--
+
 == Fibs Less Than N (Python)
 
 [source,python]
@@ -150,9 +193,26 @@ include::{sourcedir}/src/fibonacci/before.py[lines="1..8"]
 
 [.notes]
 --
-* [Explain the function]
-* Variable `a` holds the "current" Fibonacci number
-* Variable `b` holds the "next" Fibonacci number
+A bit of Googling might bring you to Python's own documentation site,
+  which contains an implementation of exactly this functionality. _This_
+  implementation has another name, it contains type annotations and a
+  docstring, but it's functionally equivalent
+
+* First, you create an initially emtpy result list, and subsequently,
+  two variables are initialized to the two first Fibonacci numbers
+** You can see the variables `a` and `b` as _Fibonacci Registers_
+** Register `a` holds the "current" Fibonacci number, and register `b`
+   holds the "next" Fibonacci number
+* You execute the loop body, as long as the "current" Fibonacci
+  number is less than the provided threshold values
+* Within the loop, you append the "current" Fibonacci number to the result
+  list
+* Next, you calculate the new values of the "current"
+  and "next" Fibonacci numbers in one go, using Python's elegant feature
+  named _sequence unpacking_. So the _new current_ Fibonacci number
+  becomes the _old next_ Fibonacci number, and the _new next_ Fibonacci
+  number, is the sum of the old two numbers.
+* Finally, you return the result list
 --
 
 == Product Owner is happy and wants more
@@ -168,12 +228,38 @@ Can you also make a function that returns the _n_'th Fibonacci number
 ____________________________________________________________________
 --
 
+[.notes]
+--
+* So your team demonstrates the functionality and the Product Owner is
+  happy with the result.
+* The PO now asks us to make a function that returns the _N_'th
+  Fibonacci number, _zero based_,
+* So Fibonacci number zero is the first Fibonacci number, Fibonacci
+  number one is the second, number two the third, and so on, and so on.
+* [He is just facilitating us programmers to make this zero based 😊]
+* So let's code this new feature...
+--
+
 
 == The N'th Fibonacci number (Python)
 
 [source,python]
 --
 include::{sourcedir}/src/fibonacci/before.py[lines="11..16"]
+--
+
+[.notes]
+--
+* As you can see, the code is similar to the previous function, but
+  there are also differences: ...
+* There is no list initialization; the function returns just one value
+* You use the `range()` function to go the requested number of times
+  through the loop body, but you don't need the counter value itself
+* And within the loop body the new pair of Fibonacci numbers is
+  calculated again.
+* After the loop finishes, you return the "then current" Fibonacci
+  number
+* [show example with zero iterations, and with one iteration]
 --
 
 
@@ -190,6 +276,15 @@ Now that we've got functions for ...
 +
 * the first N Fibonacci numbers, and
 * the smallest Fibonacci number greater than or equal to N?
+--
+
+[.notes]
+--
+* Now the Product Owner really gets enthusiastic and requests for two
+  more Fibonacci related functions, ...:
+* a function that returns the first _N_ Fibonacci numbers, and
+* a function that returns the _smallest_ Fibonacci number that is
+  greater than or equal to _N_.
 --
 
 
@@ -229,13 +324,14 @@ Do you see a pattern? ✋
 
 [.notes]
 --
+So you see all four implementations collected here together in one slide
 [cols=2*]
 |===
-|fib_list_to
-|first_n_fibs
+|`fib_list_to`
+|`first_n_fibs`
 
-|fib_ordinal
-|smallest_fib_greater_equal
+|`fib_ordinal`
+|`smallest_fib_greater_equal`
 
 |===
 
@@ -263,16 +359,31 @@ def some_fib_related_func(some_parameter):
 
 [.notes]
 --
-* [see slide]
-* Now that you see that the same code appears in different functions,
-  you start looking for ways to get rid of the apparent _redundancy_ of
-  code.
+The pattern: ...
+
+* It starts with that sometimes, the calculated values need to be
+  collected in some container, as `list` for example; this container
+  needs to be initialized first.
+* Then you see the familiar initialization of the two Fibonacci
+  registers, `a` and `b`.
+* Subsequently, some sort of loop is set up, counting, or with an
+  end-condition.
+* Within the loop-body, sometimes the "current" value is added to the
+  container, and
+* the new Fibonacci registers are calculated.
+* Finally, the "current" Fibonacci value, _or_ the built-up container
+  is returned.
+
+Now that you see that the same code appears in different functions,
+you start looking for ways to get rid of the apparent _redundancy_ of
+code.
 --
 
 
 == Time to Start Refactoring Your Code
 
-**(because you don't like redundant code)**
+**(because you want to keep your code DRY{empty}footnote:[Don't Repeat Yourself -- Wikipedia: `https://en.wikipedia.org/wiki/Don%27t_repeat_yourself`])**
+//**(because you don't like redundant code)**
 {nbsp} +
 {nbsp} +
 
@@ -281,8 +392,9 @@ def some_fib_related_func(some_parameter):
 [.notes]
 --
 * I don't know how you experience it, but I always get this itchy
-  feeling if I see repetitions of code, (keeping the code _DRY_)
-* so you start looking for ways how to refactor the code, extracting the common part into a function or method +
+  feeling if I see repetitions of code; you would like to keep your code
+  _DRY_.
+* So you start looking for ways how to refactor the code, extracting the common part into a function or method +
   {nbsp}
 * ✋ So who knows what refactoring is?
 --
@@ -292,10 +404,10 @@ def some_fib_related_func(some_parameter):
 * Restructuring existing computer code
 * Keeping external behaviour the same
 * Less complexity
-* Improves
-** design and structure
-** code readability
-** maintainability
+* Improves ...
+** ... design and structure
+** ... code readability
+** ... maintainability
 
 [.text-right]
 {blank} +
@@ -315,74 +427,175 @@ Code Refactoring +
 
 == Extracting Common Parts Not Doable?
 
-* It seems impossible to extract common parts of the code into functions
-* It is mixed up with control flow constructs -- `while` loops or `for` loops
-* Perhaps combine the requested functions ❓
+**(while trying to extract common parts of the code into a function: ...)**
+
+* The code is entangled with control flow constructs -- `while` loops or
+  `for`  loops
+* Experiment: combine the requested functions❓
 ** (by using a "mode" flag or an `enum` designating the mode)
+
+[.notes]
+--
+* So it seems _impossible_ to factor those common parts out and put them
+  in a separate, distinct function
+* The code is mixed up with control flow constructs, `while` loop or
+  `for` loops
+* ... ¿_Maybe_ you could try to _combine_ the functions all in one golden
+  "super" function?
+* Let's start with trying the first two requested features, and we will
+  use a "mode" _flag_ (a boolean) to designate which of the two features
+  is requested...
+--
 
 
 == Experiment: Combine The First Two Functions
 
 WARNING: Put on your Peril-Sensitive Sunglasses{empty}footnote:[https://hitchhikers.fandom.com/wiki/Joo_Janta_200_Super-Chromatic_Peril_Sensitive_Sunglasses]
 
-[source,python]
+[source,python,step=1]
 --
 include::{sourcedir}/src/fibonacci/first_two_combined.py[lines="6..19"]
 --
 
 [.notes]
 --
-* Warning: what you see here, really hurts the eye;
-* (It starts already with the ugly type annotation, and as the author of `Black`, Łukasz Langa, recently told us in a talk: "__ugly type annotations are an indication of ugly code__")
+* Warning: what you see here, really hurts the eye; so put on your
+ Peril-Sensitive Sunglasses...
+
+{empty}[next click]
+
+* As you can see, it starts already with the ugly return type
+  annotation, and as the author of `Black`, Łukasz Langa, told us in his
+  excellent PyCon{nbsp}US keynote talk: "__ugly type annotations are an
+  indication of ugly code__"
 * So don't take this contrived example too seriously; it merely demonstrates that the resulting code is _not_ quite _maintainable_ and this isn't the way to go...
 --
 
 
 == Refactoring The Right Way: Single Responsibility
 
+**(take a step back: think in terms of _responsibilities_)**
+
 * The _common_ part between all functions:
-** producing Fibonacci numbers
+** _Producing_ Fibonacci numbers
 * The _mutually differing_ parts between all functions:
-** loop construct:
-*** either a `for` loop (counting), or
-*** a `while` loop (varying end-conditions)
-** how to further process the generated Fibonacci numbers:
-*** collected in a list, or
-*** just the last calculated "current" Fibonacci number
+** _Consuming_ (further processing) the Fibonacci numbers:
+*** collecting them in a container, or
+*** waiting for a loop condition to occur, signalling it's time to
+    return the last calculated "current" Fibonacci number
 
 **how to separate the _common_ part from the _mutually differing_ parts?**
 
 [.notes]
 --
-* The first step is to look at your code in a more _conceptual_ way..., from a larger distance (larger flying altitude)
-* And then you realize that there is a _data producing_ part in your code, ...
-* And _that's_ the part that you can isolate.
+* The first step is to look at your code in a more _conceptual_ way...,
+  * ... from a larger distance, a larger flying altitude
+* And then you realize that there is a _data producing_ part in your
+  code, ... the code that is calculating and providing the Fibonacci
+  numbers
+* And a _data consuming_ part, ... the code that
+  _either_ stores these values in a container, _or_ is checking some
+  condition that identifies the moment to return the "current"
+  Fibonacci number.
+* The _data producing_  the part that you can isolate.
 --
 
 
 == Context Switch: Generator Functions
 
-[role="incremental"]
-* A _generator function_, when called, returns a _generator iterator_.
-* It looks like a normal function, but it contains `yield` expressions.
-* Each `yield` produces one item.
-* The _iterator_ can subsequently be used in a `for` loop, for example.
-* Each time you requests an item from it, the generator
-[role="incremental"]
-** gives back an item through the `yield` expression,
-** saves it state, and
-** passes control back to the calling code.
+* It looks like a normal function, but it contains `yield` expression(s)
+* When called, it returns a _generator iterator_, implementing the
+  _iterator protocol_
+* Each plain `yield` ...
+** produces one item
+** saves the state of the generator function
+** passes control back to the calling code
+* When a new value is requested, the generator function resumes its
+  execution from where it left off
+
+* The _iterator_ can be used in a `for` loop, for example.
 
 
 [.notes]
 --
 * Enter *Generator Functions*
-* You just make a function, however it contains a `yield` expression for
+* You just make a function, however you create a `yield` expression for
   each value that you would like to give back to the "caller" (the
   "consuming" party) +
 {nbsp}
-* So _how_ can you code a _generator_ function producing these Fibonacci
-  numbers?
+* So let's make a very basic generator function
+--
+
+
+[.columns]
+== An Example Generator Function
+[.column]
+--
+.Definition
+[source,python,step=1]
+----
+include::{sourcedir}/src/example_generator_function.py[lines="4..10"]
+----
+[step=6]
+.Usage in a `for` loop
+[source,pycon,step=6]
+----
+>>> for i in gen2():
+...     print(i)
+...
+ [==before yield 0==]
+0
+ [==before yield 1==]
+1
+ [==before return==]
+----
+--
+[.column]
+--
+[step=2]
+.Usage
+[source,pycon,step=2]
+----
+>>> itr = gen2()
+----
+[source,pycon,step=3]
+----
+>>> next(itr)
+ [==before yield 0==]
+0
+----
+[source,pycon,step=4]
+----
+>>> next(itr)
+ [==before yield 1==]
+1
+----
+[source,pycon,step=5]
+----
+>>> next(itr)
+ [==before return==]
+Traceback (most recent call last):
+  ...
+StopIteration
+----
+--
+
+[.notes]
+--
+{empty}[click to show definition]
+
+* You see here an example of an basic generator function, mimicing
+  the behavior of the `range()` function with an argument of `2`
+* When called, it produces a _generator iterator_, that implements
+  the _iterator_ protocol
+* So if you call `next()` on it, it gives you the first value (`0`).
+* another `next()` gives the second value (`1`)
+* When you request another value, it raises a `StopIteration` exception,
+  signaling that the iterator has no more value to give
+* When used in a `for` loop, it also behaves just like any other
+  _iterable_
+
+So _how_ can you code a Fibonacci _generator_ function?
 --
 
 
@@ -411,7 +624,7 @@ Print the first 8 Fibonacci numbers using `fib_gen()`:
 
 [source,pycon]
 --
->>> for _, fib in zip(range(10), fib_gen()):
+>>> for _, fib in zip(range(8), fib_gen()):
 ...     print(f"{fib:2d}")
 ...
  0
